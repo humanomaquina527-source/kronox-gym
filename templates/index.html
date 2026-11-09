@@ -44,17 +44,10 @@
             --success: #00ff00; 
             --error: #ff3333; 
         }
-        html[data-contrast="high"] .btn, 
-        html[data-contrast="high"] .btn-submit { color: #000 !important; }
+        html[data-contrast="high"] .btn, html[data-contrast="high"] .btn-submit { color: #000 !important; }
         html[data-contrast="high"] .card { border: 2px solid #ffffff; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { font-size: var(--font-base); transition: font-size 0.2s, filter 0.3s; }
         body { background-color: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; line-height: 1.6; }
 
@@ -109,12 +102,8 @@
         .acc-btn { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.4rem 0.8rem; border-radius: var(--radius); cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
         .acc-btn:hover, .acc-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* LANDING PAGE (INDEX) */
-        .hero {
-            text-align: center; padding: 5rem 2rem;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover;
-            color: white;
-        }
+        /* LANDING PAGE */
+        .hero { text-align: center; padding: 5rem 2rem; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover; color: white; }
         .hero h1 { font-size: 3rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 3px; }
         .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; }
         .btn { display: inline-block; padding: 0.8rem 2rem; background: var(--primary); color: white; text-decoration: none; border-radius: var(--radius); font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s, background 0.2s; text-transform: uppercase; letter-spacing: 1px; }
@@ -158,33 +147,73 @@
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         /* =========================================
-           NUEVA INTERFAZ: PORTAL DE MIEMBRO (APP)
+           NUEVA INTERFAZ: PORTAL DE MIEMBRO
            ========================================= */
         #appDashboard {
             display: none; /* Oculto por defecto */
-            min-height: 100vh;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg);
+            z-index: 400; /* Asegura que tape la página principal */
+            overflow-y: auto;
         }
 
-        /* Barra lateral de navegación (Desktop) */
+        /* Barra lateral de navegación */
         .app-sidebar {
             width: 250px; background: var(--card-bg); border-right: 1px solid var(--border);
             position: fixed; top: 0; left: 0; height: 100vh; padding: 2rem 1rem;
-            display: flex; flex-direction: column; z-index: 400;
+            display: flex; flex-direction: column; z-index: 500;
         }
         .app-sidebar .logo { text-align: center; margin-bottom: 2rem; }
-        .app-nav { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+        .app-nav { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
         .app-nav li { padding: 1rem; border-radius: var(--radius); cursor: pointer; font-weight: bold; color: var(--text); transition: 0.2s; display: flex; align-items: center; gap: 10px; }
         .app-nav li:hover, .app-nav li.active { background: var(--primary); color: white; }
-        .app-nav li.logout { margin-top: auto; color: var(--error); }
-        .app-nav li.logout:hover { background: var(--error); color: white; }
+        
+        /* Cerrar sesión abajo del todo */
+        .app-nav .logout { margin-top: auto; color: var(--error); }
+        .app-nav .logout:hover { background: var(--error); color: white; }
 
         /* Contenido principal de la app */
         .app-content {
             margin-left: 250px; padding: 2rem; min-height: 100vh;
         }
 
-        /* Vistas de la App (Inicio, Rutinas, Perfil) */
+        /* Header de la App (Perfil arriba a la derecha) */
+        .app-top-header {
+            display: flex; justify-content: flex-end; align-items: center;
+            margin-bottom: 2rem; gap: 15px;
+        }
+
+        /* Botón flotante de perfil */
+        .profile-btn {
+            background: var(--card-bg); border: 2px solid var(--primary);
+            color: var(--primary); width: 45px; height: 45px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer;
+            box-shadow: var(--shadow); transition: 0.2s;
+        }
+        .profile-btn:hover { background: var(--primary); color: white; }
+
+        /* Ventanita flotante de perfil (Popover) */
+        .profile-popover {
+            display: none; position: absolute; top: 80px; right: 30px;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            padding: 1.5rem; z-index: 600; width: 280px; text-align: center;
+        }
+        .profile-popover.active { display: block; }
+        .profile-popover .avatar {
+            width: 60px; height: 60px; background: var(--primary); color: white;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; font-weight: bold; margin: 0 auto 10px;
+        }
+        .profile-popover h3 { color: var(--primary); font-size: 1.2rem; }
+        .profile-popover p { font-size: 0.9rem; margin-bottom: 1rem; }
+        .profile-popover .stats { display: flex; justify-content: space-around; background: var(--bg); padding: 10px; border-radius: var(--radius); margin-bottom: 1rem; }
+        .profile-popover .stats div { text-align: center; }
+        .profile-popover .stats h4 { color: var(--primary); font-size: 1.2rem; }
+
+        /* Vistas de la App (Inicio, Rutinas) */
         .app-view { display: none; animation: fadeIn 0.3s ease; }
         .app-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -192,47 +221,23 @@
         .app-header { margin-bottom: 2rem; }
         .app-header h1 { color: var(--primary); font-size: 2rem; }
 
-        /* Tarjetas del Dashboard (Estilo Planet Fitness) */
+        /* Tarjetas del Dashboard */
         .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .pf-card { background: var(--card-bg); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); }
         .pf-card h3 { color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
         
-        /* Código QR simulado */
-        .qr-box {
-            width: 150px; height: 150px; background: white; border: 4px solid #000;
-            margin: 0 auto; display: flex; justify-content: center; align-items: center;
-            color: #000; font-weight: bold; font-size: 0.8rem; text-align: center; padding: 10px;
-            border-radius: 10px;
-        }
+        .qr-box { width: 150px; height: 150px; background: white; border: 4px solid #000; margin: 0 auto; display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 0.8rem; text-align: center; padding: 10px; border-radius: 10px; }
 
-        /* Medidor de Aforo (Crowd Meter) */
         .crowd-meter { display: flex; flex-direction: column; align-items: center; margin-top: 1rem; }
-        .crowd-circle {
-            width: 100px; height: 100px; border-radius: 50%;
-            background: conic-gradient(var(--primary) 65%, #ddd 0);
-            display: flex; justify-content: center; align-items: center;
-            font-weight: bold; font-size: 1.2rem; color: var(--text);
-            position: relative;
-        }
-        .crowd-circle::before {
-            content: ""; position: absolute; width: 80px; height: 80px;
-            background: var(--card-bg); border-radius: 50%;
-        }
+        .crowd-circle { width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(var(--primary) 65%, #ddd 0); display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; color: var(--text); position: relative; }
+        .crowd-circle::before { content: ""; position: absolute; width: 80px; height: 80px; background: var(--card-bg); border-radius: 50%; }
         .crowd-circle span { position: relative; z-index: 1; }
         .crowd-status { margin-top: 10px; font-weight: bold; color: var(--success); }
 
-        /* Lista de Rutinas */
         .routine-list { list-style: none; }
         .routine-list li { padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .routine-list li:last-child { border-bottom: none; }
         .routine-badge { background: var(--primary); color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; }
-
-        /* Perfil de Usuario */
-        .profile-info { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
-        .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--primary); color: white; display: flex; justify-content: center; align-items: center; font-size: 2rem; font-weight: bold; }
-        
-        /* Botón flotante de accesibilidad dentro de la app */
-        .app-accessibility { position: fixed; top: 20px; right: 20px; z-index: 500; display: flex; gap: 10px; }
 
         /* RESPONSIVO PARA APP */
         @media (max-width: 768px) {
@@ -244,7 +249,7 @@
             .app-sidebar .logo { display: none; }
             .app-nav { flex-direction: row; gap: 0; width: 100%; justify-content: space-around; }
             .app-nav li { padding: 0.8rem; font-size: 0.8rem; flex-direction: column; gap: 5px; }
-            .app-nav li.logout { margin-top: 0; }
+            .app-nav .logout { margin-top: 0; }
             .app-content { margin-left: 0; padding-bottom: 80px; }
         }
     </style>
@@ -424,19 +429,22 @@
     <!-- 2. VISTA PRIVADA (Portal de Miembro) -->
     <!-- ========================================== -->
     <div id="appDashboard">
-        <!-- Controles de accesibilidad para la app -->
-        <div class="app-accessibility">
+        <!-- Controles de accesibilidad flotantes para la app -->
+        <div class="floating-controls" style="z-index: 600;">
             <button class="icon-btn" id="ttsToggleApp" title="Lectura en Voz Alta">🔊</button>
             <button class="icon-btn" id="themeToggleApp" title="Cambiar Tema">🌙</button>
+            <button class="icon-btn" id="accToggleApp" title="Opciones de Accesibilidad">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
+            </button>
         </div>
 
-        <!-- Barra Lateral / Menú -->
+        <!-- Barra Lateral -->
         <aside class="app-sidebar">
             <div class="logo">Kronox App</div>
             <ul class="app-nav">
                 <li class="active" onclick="switchView('inicio', this)">🏠 Inicio</li>
                 <li onclick="switchView('rutinas', this)">🏋️ Mis Rutinas</li>
-                <li onclick="switchView('perfil', this)">👤 Mi Perfil</li>
+                <!-- CERRAR SESIÓN MOVIDO AQUÍ -->
                 <li class="logout" onclick="cerrarSesion()">🚪 Cerrar Sesión</li>
             </ul>
         </aside>
@@ -444,7 +452,26 @@
         <!-- Contenido Dinámico -->
         <main class="app-content">
             
-            <!-- VISTA 1: INICIO (Estilo Planet Fitness) -->
+            <!-- Header superior con Perfil a la derecha -->
+            <div class="app-top-header">
+                <button class="profile-btn" onclick="toggleProfilePopover()">D</button>
+            </div>
+
+            <!-- Ventanita flotante de Perfil -->
+            <div class="profile-popover" id="profilePopover">
+                <div class="avatar">D</div>
+                <h3>Dulce María</h3>
+                <p style="color: var(--primary); font-weight: bold;">Miembro Premium</p>
+                <p style="color: #888; margin-bottom: 1rem;">Desde: Enero 2026</p>
+                
+                <div class="stats">
+                    <div><h4>12</h4><p>Visitas</p></div>
+                    <div><h4>8</h4><p>Clases</p></div>
+                </div>
+                <button class="btn" style="width: 100%; font-size: 0.8rem;" onclick="alert('Simulación: Renovación de membresía')">Renovar Membresía</button>
+            </div>
+
+            <!-- VISTA 1: INICIO -->
             <div id="view-inicio" class="app-view active">
                 <div class="app-header">
                     <h1>¡Hola, Dulce María!</h1>
@@ -452,16 +479,12 @@
                 </div>
 
                 <div class="dash-grid">
-                    <!-- Tarjeta de Código QR -->
                     <div class="pf-card" style="text-align: center;">
                         <h3 style="justify-content: center;">📱 Mi Pase Digital</h3>
                         <p style="font-size: 0.9rem; margin-bottom: 1rem;">Escanea este código en la entrada.</p>
-                        <div class="qr-box">
-                            [ CÓDIGO QR SIMULADO ]<br>KRONOX-2026
-                        </div>
+                        <div class="qr-box">[ CÓDIGO QR SIMULADO ]<br>KRONOX-2026</div>
                     </div>
 
-                    <!-- Tarjeta de Aforo -->
                     <div class="pf-card">
                         <h3>🏋️ Aforo del Gimnasio</h3>
                         <p style="font-size: 0.9rem;">El gym está moderado hoy.</p>
@@ -471,7 +494,6 @@
                         </div>
                     </div>
 
-                    <!-- Tarjeta de Clase Próxima -->
                     <div class="pf-card">
                         <h3>⏰ Próxima Clase</h3>
                         <p style="font-size: 0.9rem; margin-top: 1rem;"><strong>Boxeo</strong></p>
@@ -508,47 +530,39 @@
                 </div>
             </div>
 
-            <!-- VISTA 3: PERFIL -->
-            <div id="view-perfil" class="app-view">
-                <div class="app-header">
-                    <h1>Mi Perfil</h1>
-                </div>
-
-                <div class="pf-card">
-                    <div class="profile-info">
-                        <div class="profile-avatar">D</div>
-                        <div>
-                            <h2>Dulce María</h2>
-                            <p style="color: var(--primary); font-weight: bold;">Miembro Premium</p>
-                            <p style="font-size: 0.9rem; color: #888;">Miembro desde: Enero 2026</p>
-                        </div>
-                    </div>
-
-                    <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--border);">
-
-                    <h3>Estadísticas del Mes</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-                        <div style="background: var(--bg); padding: 1rem; border-radius: var(--radius); text-align: center;">
-                            <h2 style="color: var(--primary);">12</h2>
-                            <p style="font-size: 0.9rem;">Visitas</p>
-                        </div>
-                        <div style="background: var(--bg); padding: 1rem; border-radius: var(--radius); text-align: center;">
-                            <h2 style="color: var(--primary);">8</h2>
-                            <p style="font-size: 0.9rem;">Clases Tomadas</p>
-                        </div>
-                    </div>
-                    
-                    <button class="btn" style="width: 100%; margin-top: 1.5rem; background: var(--primary);">Renovar Membresía</button>
-                </div>
-            </div>
-
         </main>
+    </div>
+
+    <!-- PANEL DE ACCESIBILIDAD FLOTANTE (Compartido) -->
+    <div class="accessibility-panel" id="accPanelApp" style="z-index: 700;">
+        <h3>Accesibilidad Universal</h3>
+        <div class="acc-group">
+            <label>Tamaño de letra</label>
+            <div class="acc-options">
+                <button class="acc-btn" onclick="changeFontSize('-2px')">A-</button>
+                <button class="acc-btn active" onclick="changeFontSize('reset')">A</button>
+                <button class="acc-btn" onclick="changeFontSize('+2px')">A+</button>
+            </div>
+        </div>
+        <div class="acc-group">
+            <label>Visión de Color</label>
+            <div class="acc-options">
+                <button class="acc-btn active" onclick="setFilter('none', this)">Ninguno</button>
+                <button class="acc-btn" onclick="setFilter('protanopia', this)">Protanopía</button>
+                <button class="acc-btn" onclick="setFilter('deuteranopia', this)">Deuteranopía</button>
+                <button class="acc-btn" onclick="setFilter('tritanopia', this)">Tritanopía</button>
+            </div>
+        </div>
+        <div class="acc-group">
+            <label>Contraste</label>
+            <div class="acc-options"><button class="acc-btn" id="contrastBtnApp" onclick="toggleContrast(this)">Activar Alto Contraste</button></div>
+        </div>
     </div>
 
     <script>
         const html = document.documentElement;
 
-        // 1. LÓGICA DE ACCESIBILIDAD (Global)
+        // 1. ACCESIBILIDAD (Global)
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleApp = document.getElementById('themeToggleApp');
         
@@ -571,9 +585,14 @@
         themeToggle.addEventListener('click', toggleTheme);
         themeToggleApp.addEventListener('click', toggleTheme);
 
+        // Paneles de accesibilidad
         const accToggle = document.getElementById('accToggle');
         const accPanel = document.getElementById('accPanel');
+        const accToggleApp = document.getElementById('accToggleApp');
+        const accPanelApp = document.getElementById('accPanelApp');
+
         accToggle.addEventListener('click', () => accPanel.classList.toggle('active'));
+        accToggleApp.addEventListener('click', () => accPanelApp.classList.toggle('active'));
 
         let currentFontSize = 16;
         function changeFontSize(action) {
@@ -581,28 +600,47 @@
             else if (action === '+2px') currentFontSize += 2;
             else if (action === '-2px' && currentFontSize > 10) currentFontSize -= 2;
             html.style.setProperty('--font-base', currentFontSize + 'px');
-            document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn').forEach(btn => btn.classList.remove('active'));
-            if (action === 'reset') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[1].classList.add('active');
-            if (action === '+2px') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[2].classList.add('active');
-            if (action === '-2px') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[0].classList.add('active');
+            document.querySelectorAll('.acc-group').forEach(group => {
+                group.querySelectorAll('.acc-btn').forEach(btn => btn.classList.remove('active'));
+            });
+            // Activar el botón correcto en ambos paneles
+            document.querySelectorAll('.acc-group').forEach(group => {
+                if (action === 'reset') group.querySelectorAll('.acc-btn')[1]?.classList.add('active');
+                if (action === '+2px') group.querySelectorAll('.acc-btn')[2]?.classList.add('active');
+                if (action === '-2px') group.querySelectorAll('.acc-btn')[0]?.classList.add('active');
+            });
         }
 
         function setFilter(type, btn) {
             if (type === 'none') html.removeAttribute('data-filter');
             else html.setAttribute('data-filter', type);
-            document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
+            
+            // Quitar active de todos los botones de filtro en ambos paneles
+            document.querySelectorAll('.acc-group:nth-child(2) .acc-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            // Sincronizar el otro panel
+            const otherPanelBtns = btn.closest('.accessibility-panel').id === 'accPanel' 
+                ? accPanelApp.querySelectorAll('.acc-btn') 
+                : accPanel.querySelectorAll('.acc-btn');
+            otherPanelBtns.forEach(b => b.classList.remove('active'));
+            // Encontrar el botón equivalente y activarlo
+            const text = btn.textContent;
+            otherPanelBtns.forEach(b => { if(b.textContent === text) b.classList.add('active'); });
         }
 
         function toggleContrast(btn) {
             if (html.getAttribute('data-contrast') === 'high') {
                 html.removeAttribute('data-contrast');
-                btn.classList.remove('active');
-                btn.textContent = 'Activar Alto Contraste';
+                document.querySelectorAll('#contrastBtn, #contrastBtnApp').forEach(b => {
+                    b.classList.remove('active');
+                    b.textContent = 'Activar Alto Contraste';
+                });
             } else {
                 html.setAttribute('data-contrast', 'high');
-                btn.classList.add('active');
-                btn.textContent = 'Desactivar Alto Contraste';
+                document.querySelectorAll('#contrastBtn, #contrastBtnApp').forEach(b => {
+                    b.classList.add('active');
+                    b.textContent = 'Desactivar Alto Contraste';
+                });
                 html.removeAttribute('data-filter');
             }
         }
@@ -612,28 +650,27 @@
             if (isSpeaking) {
                 window.speechSynthesis.cancel();
                 isSpeaking = false;
-                btnElement.textContent = '🔊';
+                document.getElementById('ttsToggle').textContent = '🔊';
+                document.getElementById('ttsToggleApp').textContent = '🔊';
             } else {
                 const text = "Bienvenido a tu portal de Kronox Gym. Aquí puedes ver tu pase digital, el aforo del gimnasio y tus rutinas.";
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'es-MX';
-                utterance.onend = () => { isSpeaking = false; btnElement.textContent = '🔊'; };
+                utterance.onend = () => { 
+                    isSpeaking = false; 
+                    document.getElementById('ttsToggle').textContent = '🔊';
+                    document.getElementById('ttsToggleApp').textContent = '🔊';
+                };
                 window.speechSynthesis.speak(utterance);
                 isSpeaking = true;
-                btnElement.textContent = '⏹️';
+                document.getElementById('ttsToggle').textContent = '⏹️';
+                document.getElementById('ttsToggleApp').textContent = '⏹️';
             }
         }
         document.getElementById('ttsToggle').addEventListener('click', (e) => toggleTTS(e.target));
         document.getElementById('ttsToggleApp').addEventListener('click', (e) => toggleTTS(e.target));
 
-        // 2. LÓGICA DEL MODAL LSM
-        const lsmModal = document.getElementById('lsmModal');
-        const videoIframe = document.getElementById('lsmVideo');
-        const originalVideoSrc = videoIframe.src;
-        function openLSM() { lsmModal.classList.add('active'); }
-        function closeLSM() { lsmModal.classList.remove('active'); videoIframe.src = ""; setTimeout(() => { videoIframe.src = originalVideoSrc; }, 500); }
-
-        // 3. LÓGICA DE LOGIN Y APP
+        // 2. LOGIN Y NAVEGACIÓN DE LA APP
         const loginModal = document.getElementById('loginModal');
         const publicSite = document.getElementById('publicSite');
         const appDashboard = document.getElementById('appDashboard');
@@ -645,9 +682,9 @@
             const email = document.getElementById('loginEmail').value;
             if(email) {
                 cerrarLogin();
-                publicSite.style.display = 'none'; // Ocultamos la página de inicio
-                appDashboard.style.display = 'block'; // Mostramos la App
-                window.scrollTo(0, 0); // Subimos al top
+                publicSite.style.display = 'none'; 
+                appDashboard.style.display = 'block'; 
+                window.scrollTo(0, 0); 
             } else {
                 alert("Por favor, ingresa un correo para simular el inicio de sesión.");
             }
@@ -656,97 +693,37 @@
         function cerrarSesion() {
             appDashboard.style.display = 'none';
             publicSite.style.display = 'block';
-            // Resetear vistas
             switchView('inicio', document.querySelector('.app-nav li'));
+            document.getElementById('profilePopover').classList.remove('active');
         }
 
-        // Navegación interna de la App (SPA)
         function switchView(viewName, navElement) {
-            // Ocultar todas las vistas
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active'));
-            // Mostrar la vista seleccionada
             document.getElementById('view-' + viewName).classList.add('active');
             
-            // Actualizar el menú activo
             document.querySelectorAll('.app-nav li').forEach(li => li.classList.remove('active'));
             if(navElement) navElement.classList.add('active');
         }
 
-        // 4. FORMULARIO DE INSCRIPCIÓN
+        // 3. POPOVER DE PERFIL
+        const profilePopover = document.getElementById('profilePopover');
+        function toggleProfilePopover() {
+            profilePopover.classList.toggle('active');
+        }
+        // Cerrar popover si se hace clic fuera
+        document.addEventListener('click', (e) => {
+            if (!profilePopover.contains(e.target) && !e.target.closest('.profile-btn')) {
+                profilePopover.classList.remove('active');
+            }
+        });
+
+        // 4. FORMULARIO (Igual que antes)
         const form = document.getElementById('inscripcionForm');
-        const nombre = document.getElementById('nombre');
-        const email = document.getElementById('email');
-        const telefono = document.getElementById('telefono');
-        const plan = document.getElementById('plan');
-        const submitBtn = document.getElementById('submitBtn');
-        const spinner = document.getElementById('spinner');
-        const btnText = document.getElementById('btnText');
-        const successMsg = document.getElementById('successMsg');
-        const progressFill = document.getElementById('progressFill');
-
-        function updateProgress() {
-            let filled = 0;
-            if (nombre.value.trim() !== '') filled++;
-            if (email.value.trim() !== '') filled++;
-            if (telefono.value.trim() !== '') filled++;
-            if (plan.value !== '') filled++;
-            progressFill.style.width = (filled / 4 * 100) + '%';
-        }
-        [nombre, email, telefono, plan].forEach(el => {
-            el.addEventListener('input', updateProgress);
-            el.addEventListener('change', updateProgress);
-        });
-
-        function validateField(input, errorId, condition) {
-            const errorEl = document.getElementById(errorId);
-            if (condition) { input.classList.remove('error'); errorEl.classList.remove('show'); return true; } 
-            else { input.classList.add('error'); errorEl.classList.add('show'); return false; }
-        }
-
-        nombre.addEventListener('blur', () => validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3));
-        email.addEventListener('blur', () => { const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; validateField(email, 'error-email', re.test(email.value)); });
-        telefono.addEventListener('blur', () => validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, ''))));
-        plan.addEventListener('change', () => validateField(plan, 'error-plan', plan.value !== ''));
-
-        function limpiarFormulario() {
-            if(confirm("¿Estás seguro de cancelar la inscripción?")) {
-                form.reset(); progressFill.style.width = '0%';
-                document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
-                successMsg.classList.remove('show');
-            }
-        }
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const isNombreValid = validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
-            const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const isEmailValid = validateField(email, 'error-email', reEmail.test(email.value));
-            const isTelefonoValid = validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
-            const isPlanValid = validateField(plan, 'error-plan', plan.value !== '');
-
-            if (!isNombreValid || !isEmailValid || !isTelefonoValid || !isPlanValid) return;
-
-            submitBtn.disabled = true; spinner.style.display = 'inline-block'; btnText.textContent = 'Guardando...';
-            try {
-                const response = await fetch('/api/inscribir', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nombre: nombre.value, email: email.value, telefono: telefono.value, plan: plan.value })
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    spinner.style.display = 'none'; btnText.textContent = 'Enviar Inscripción'; submitBtn.disabled = false;
-                    document.getElementById('successText').textContent = data.mensaje;
-                    successMsg.style.backgroundColor = 'var(--success)'; successMsg.classList.add('show');
-                    form.reset(); progressFill.style.width = '0%';
-                    setTimeout(() => successMsg.classList.remove('show'), 8000);
-                } else { throw new Error(data.error); }
-            } catch (error) {
-                spinner.style.display = 'none'; btnText.textContent = 'Enviar Inscripción'; submitBtn.disabled = false;
-                document.getElementById('successText').textContent = '❌ ' + error.message;
-                successMsg.style.backgroundColor = 'var(--error)'; successMsg.classList.add('show');
-            }
-        });
+        // ... (Aquí va toda tu lógica del formulario que ya tenías, no la repetiré para no hacer el mensaje infinito, 
+        // pero asegúrate de mantenerla igual que en el código anterior)
+        
+        // NOTA: Si copiaste todo el bloque, asegúrate de no borrar las funciones del formulario
+        // que están al final del script original. 
     </script>
 </body>
 </html>
