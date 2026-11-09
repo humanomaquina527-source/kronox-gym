@@ -670,4 +670,112 @@
         // 5. FORMULARIO Y LÓGICA
         const form = document.getElementById('inscripcionForm');
         const nombre = document.getElementById('nombre');
-       
+        const email = document.getElementById('email');
+        const telefono = document.getElementById('telefono');
+        const plan = document.getElementById('plan');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const successMsg = document.getElementById('successMsg');
+        const progressFill = document.getElementById('progressFill');
+
+        function updateProgress() {
+            let filled = 0;
+            if (nombre.value.trim() !== '') filled++;
+            if (email.value.trim() !== '') filled++;
+            if (telefono.value.trim() !== '') filled++;
+            if (plan.value !== '') filled++;
+            progressFill.style.width = (filled / 4 * 100) + '%';
+        }
+
+        [nombre, email, telefono, plan].forEach(el => {
+            el.addEventListener('input', updateProgress);
+            el.addEventListener('change', updateProgress);
+        });
+
+        function validateField(input, errorId, condition) {
+            const errorEl = document.getElementById(errorId);
+            if (condition) {
+                input.classList.remove('error');
+                errorEl.classList.remove('show');
+                return true;
+            } else {
+                input.classList.add('error');
+                errorEl.classList.add('show');
+                return false;
+            }
+        }
+
+        nombre.addEventListener('blur', () => validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3));
+        email.addEventListener('blur', () => {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            validateField(email, 'error-email', re.test(email.value));
+        });
+        telefono.addEventListener('blur', () => validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, ''))));
+        plan.addEventListener('change', () => validateField(plan, 'error-plan', plan.value !== ''));
+
+        // NUEVA FUNCIÓN: Limpiar formulario (Salidas de emergencia)
+        function limpiarFormulario() {
+            if(confirm("¿Estás seguro de que deseas cancelar la inscripción? Se borrarán los datos ingresados.")) {
+                form.reset();
+                progressFill.style.width = '0%';
+                document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
+                document.querySelectorAll('.form-group input').forEach(el => el.classList.remove('error'));
+                successMsg.classList.remove('show');
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const isNombreValid = validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
+            const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isEmailValid = validateField(email, 'error-email', reEmail.test(email.value));
+            const isTelefonoValid = validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
+            const isPlanValid = validateField(plan, 'error-plan', plan.value !== '');
+
+            if (!isNombreValid || !isEmailValid || !isTelefonoValid || !isPlanValid) return;
+
+            submitBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Guardando...';
+            successMsg.classList.remove('show');
+
+            try {
+                const response = await fetch('/api/inscribir', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: nombre.value,
+                        email: email.value,
+                        telefono: telefono.value,
+                        plan: plan.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    spinner.style.display = 'none';
+                    btnText.textContent = 'Enviar Inscripción';
+                    submitBtn.disabled = false;
+                    successMsg.textContent = '✅ ' + data.mensaje;
+                    successMsg.style.backgroundColor = 'var(--success)';
+                    successMsg.classList.add('show');
+                    form.reset();
+                    progressFill.style.width = '0%';
+                    setTimeout(() => successMsg.classList.remove('show'), 8000);
+                } else {
+                    throw new Error(data.error || 'Error en el servidor');
+                }
+            } catch (error) {
+                spinner.style.display = 'none';
+                btnText.textContent = 'Enviar Inscripción';
+                submitBtn.disabled = false;
+                successMsg.textContent = '❌ ' + error.message;
+                successMsg.style.backgroundColor = 'var(--error)';
+                successMsg.classList.add('show');
+            }
+        });
+    </script>
+</body>
+</html>
