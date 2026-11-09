@@ -55,7 +55,6 @@ def ver_inscripciones():
     filas = cursor.fetchall()
     conn.close()
     
-    # HTML con el mismo diseño de la página principal
     html = """
     <!DOCTYPE html>
     <html lang="es">
@@ -91,4 +90,5 @@ def ver_inscripciones():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
     app.run(host='0.0.0.0', port=port, debug=True)
