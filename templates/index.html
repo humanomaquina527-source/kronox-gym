@@ -231,7 +231,7 @@
 </head>
 <body>
 
-    <!-- 1. VISTA PÚBLICA (Landing Page) -->
+    <!-- VISTA PÚBLICA -->
     <div id="publicSite">
         <svg style="display: none;">
             <filter id="protanopia"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter>
@@ -266,9 +266,9 @@
             <div class="acc-group">
                 <label>Tamaño de letra</label>
                 <div class="acc-options">
-                    <button class="acc-btn" onclick="changeFontSize('-2px')">A-</button>
-                    <button class="acc-btn active" onclick="changeFontSize('reset')">A</button>
-                    <button class="acc-btn" onclick="changeFontSize('+2px')">A+</button>
+                    <button class="acc-btn" onclick="changeFontSize('-2px', this)">A-</button>
+                    <button class="acc-btn active" onclick="changeFontSize('reset', this)">A</button>
+                    <button class="acc-btn" onclick="changeFontSize('+2px', this)">A+</button>
                 </div>
             </div>
             <div class="acc-group">
@@ -317,7 +317,6 @@
         </section>
 
         <section class="section" id="inscripcion">
-            <!-- MODIFICACIÓN 1: Quitar "(Nuevos Usuarios)" -->
             <h2 class="section-title">Inscripción</h2>
             <div class="form-container">
                 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -354,7 +353,6 @@
                             <span id="btnText">Enviar Inscripción</span>
                         </button>
                     </div>
-                    <!-- MODIFICACIÓN 3: Mensaje de éxito listo para mostrarse -->
                     <div class="success-msg" id="successMsg">
                         <span id="successText">✔ ¡Inscripción exitosa!</span>
                     </div>
@@ -368,7 +366,6 @@
             <p style="margin-top:1rem; font-size:0.9rem; opacity:0.7;">© 2026 Kronox Gym. Proyecto IHC - UAEM.</p>
         </footer>
 
-        <!-- MODAL LOGIN -->
         <div class="modal" id="loginModal">
             <div class="modal-content" style="max-width: 400px;">
                 <button class="close-modal" onclick="cerrarLogin()">✕</button>
@@ -385,11 +382,9 @@
                     </div>
                     <button type="submit" class="btn-submit">Entrar a mi cuenta</button>
                 </form>
-                <!-- MODIFICACIÓN 2: Se quitó la leyenda de simulación -->
             </div>
         </div>
 
-        <!-- MODAL HORARIOS -->
         <div class="modal" id="horariosModal">
             <div class="modal-content">
                 <button class="close-modal" onclick="cerrarHorarios()">✕</button>
@@ -419,7 +414,6 @@
             </div>
         </div>
 
-        <!-- MODAL LSM -->
         <div class="modal" id="lsmModal">
             <div class="modal-content">
                 <button class="close-modal" onclick="closeLSM()">✕</button>
@@ -431,10 +425,9 @@
         </div>
     </div>
 
-    <!-- 2. VISTA PRIVADA (Portal de Miembro) -->
+    <!-- VISTA PRIVADA (PORTAL) -->
     <div id="appDashboard">
         
-        <!-- MODIFICACIÓN 4: Se agregó un "overlay" para detectar clic fuera del menú -->
         <div id="sidebarOverlay" onclick="toggleSidebar()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:490;"></div>
 
         <aside class="app-sidebar" id="appSidebar">
@@ -442,6 +435,7 @@
             <ul class="app-nav">
                 <li class="active" onclick="switchView('inicio', this)">🏠 Inicio</li>
                 <li onclick="switchView('rutinas', this)">🏋️ Mis Rutinas</li>
+                <!-- CORRECCIÓN: Botón de cerrar sesión funcional -->
                 <li class="logout" onclick="confirmarCerrarSesion()">🚪 Cerrar Sesión</li>
             </ul>
         </aside>
@@ -487,6 +481,7 @@
                         <h1>¡Hola, Dulce María!</h1>
                         <p style="color: #888;">Plan Premium activo</p>
                     </div>
+                    <!-- CORRECCIÓN: Botón LSM funcional -->
                     <button class="lsm-help-btn" onclick="openLSM()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 1 1 3 0m-3 6a1.5 1.5 0 0 1-3 0v-5a1.5 1.5 0 1 1 3 0m0 3.5v-4a1.5 1.5 0 1 1 3 0m0 1.5v-2a1.5 1.5 0 1 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-5"></path></svg>
                         Ayuda LSM
@@ -513,7 +508,6 @@
                         <h3>Próxima Clase</h3>
                         <p style="font-size: 1.1rem; margin-top: 1rem; font-weight: bold;">Boxeo</p>
                         <p style="font-size: 0.9rem; color: #888;">Hoy a las 18:00 hrs - Salón B</p>
-                        <!-- MODIFICACIÓN 5: Se asegura que el botón abra el modal -->
                         <button class="btn" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;" onclick="abrirHorarios()">Ver Horarios</button>
                     </div>
                 </div>
@@ -553,15 +547,15 @@
         </main>
     </div>
 
-    <!-- PANEL DE ACCESIBILIDAD FLOTANTE (App) -->
+    <!-- PANEL DE ACCESIBILIDAD (APP) -->
     <div class="accessibility-panel" id="accPanelApp" style="z-index: 700;">
         <h3>Accesibilidad Universal</h3>
         <div class="acc-group">
             <label>Tamaño de letra</label>
             <div class="acc-options">
-                <button class="acc-btn" onclick="changeFontSize('-2px')">A-</button>
-                <button class="acc-btn active" onclick="changeFontSize('reset')">A</button>
-                <button class="acc-btn" onclick="changeFontSize('+2px')">A+</button>
+                <button class="acc-btn" onclick="changeFontSize('-2px', this)">A-</button>
+                <button class="acc-btn active" onclick="changeFontSize('reset', this)">A</button>
+                <button class="acc-btn" onclick="changeFontSize('+2px', this)">A+</button>
             </div>
         </div>
         <div class="acc-group">
@@ -579,7 +573,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CERRAR SESIÓN -->
+    <!-- MODAL CERRAR SESIÓN -->
     <div class="modal" id="logoutModal">
         <div class="modal-content">
             <h2 style="color: var(--primary); margin-bottom: 1rem;">Cerrar Sesión</h2>
@@ -627,17 +621,27 @@
         accToggleApp.addEventListener('click', () => accPanelApp.classList.toggle('active'));
 
         let currentFontSize = 16;
-        function changeFontSize(action) {
+        // CORRECCIÓN: Se pasa el botón para activar solo a ese
+        function changeFontSize(action, btn) {
             if (action === 'reset') currentFontSize = 16;
             else if (action === '+2px') currentFontSize += 2;
             else if (action === '-2px' && currentFontSize > 10) currentFontSize -= 2;
             html.style.setProperty('--font-base', currentFontSize + 'px');
+            
+            // Quitar active de todos los hermanos
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
 
+        // CORRECCIÓN: Se pasa el botón para activar solo a ese
         function setFilter(type, btn) {
             if (type === 'none') html.removeAttribute('data-filter');
             else html.setAttribute('data-filter', type);
-            document.querySelectorAll('.acc-group:nth-child(2) .acc-btn').forEach(b => b.classList.remove('active'));
+            
+            // Quitar active de todos los hermanos
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
         }
 
@@ -672,7 +676,7 @@
         document.getElementById('ttsToggle').addEventListener('click', (e) => toggleTTS(e.currentTarget));
         document.getElementById('ttsToggleApp').addEventListener('click', (e) => toggleTTS(e.currentTarget));
 
-        // 2. LOGIN Y APLICACIÓN
+        // 2. LOGIN Y APP
         const loginModal = document.getElementById('loginModal');
         const publicSite = document.getElementById('publicSite');
         const appDashboard = document.getElementById('appDashboard');
@@ -692,27 +696,33 @@
             }
         }
 
-        // CERRAR SESIÓN
+        // CERRAR SESIÓN (CORRECCIÓN)
         const logoutModal = document.getElementById('logoutModal');
-        function confirmarCerrarSesion() { logoutModal.classList.add('active'); }
-        function cerrarModalLogout() { logoutModal.classList.remove('active'); }
+        
+        function confirmarCerrarSesion() { 
+            logoutModal.classList.add('active'); 
+            appSidebar.classList.remove('open');
+            sidebarOverlay.style.display = 'none';
+        }
+        
+        function cerrarModalLogout() { 
+            logoutModal.classList.remove('active'); 
+        }
+        
         function ejecutarCerrarSesion() {
             cerrarModalLogout();
             appDashboard.style.display = 'none';
             publicSite.style.display = 'block';
             switchView('inicio', document.querySelector('.app-nav li'));
             document.getElementById('profilePopover').classList.remove('active');
-            appSidebar.classList.remove('open');
-            sidebarOverlay.style.display = 'none'; // Ocultar overlay
         }
 
-        // MODIFICACIÓN 4: Lógica del Menú y Overlay
         function toggleSidebar() {
             appSidebar.classList.toggle('open');
             if (appSidebar.classList.contains('open')) {
-                sidebarOverlay.style.display = 'block'; // Mostrar overlay
+                sidebarOverlay.style.display = 'block';
             } else {
-                sidebarOverlay.style.display = 'none'; // Ocultar overlay
+                sidebarOverlay.style.display = 'none';
             }
         }
 
@@ -723,12 +733,10 @@
             document.querySelectorAll('.app-nav li').forEach(li => li.classList.remove('active'));
             if(navElement) navElement.classList.add('active');
             
-            // Cerrar menú y overlay
             appSidebar.classList.remove('open');
             sidebarOverlay.style.display = 'none';
         }
 
-        // POPOVER DE PERFIL
         const profilePopover = document.getElementById('profilePopover');
         function toggleProfilePopover() { profilePopover.classList.toggle('active'); }
         document.addEventListener('click', (e) => {
@@ -737,22 +745,26 @@
             }
         });
 
-        // MODIFICACIÓN 5: Funcionalidad de Horarios
         const horariosModal = document.getElementById('horariosModal');
         function abrirHorarios() { horariosModal.classList.add('active'); }
         function cerrarHorarios() { horariosModal.classList.remove('active'); }
 
-        // MODAL LSM
+        // LSM (CORRECCIÓN)
         const lsmModal = document.getElementById('lsmModal');
         const lsmVideo = document.getElementById('lsmVideo');
-        function openLSM() { lsmModal.classList.add('active'); }
+        
+        function openLSM() { 
+            lsmModal.classList.add('active'); 
+        }
+        
         function closeLSM() { 
             lsmModal.classList.remove('active');
+            // Detener video
             const iframeSrc = lsmVideo.src;
             lsmVideo.src = iframeSrc; 
         }
 
-        // MODIFICACIÓN 3: Lógica del Formulario
+        // FORMULARIO
         const form = document.getElementById('inscripcionForm');
         const nombre = document.getElementById('nombre');
         const email = document.getElementById('email');
