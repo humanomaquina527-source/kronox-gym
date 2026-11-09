@@ -363,13 +363,14 @@
         <div class="nav-buttons">
             <button class="icon-btn" id="ttsToggle" title="Lectura en Voz Alta">🔊</button>
             <button class="icon-btn" id="themeToggle" title="Cambiar Tema">🌙</button>
-            <!-- NUEVO ICONO UNIVERSAL -->
+            <!-- NUEVO ICONO GLOBAL DE ACCESIBILIDAD -->
             <button class="icon-btn" id="accToggle" title="Opciones de Accesibilidad">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="4" r="2"></circle>
-                    <path d="M19 13v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                    <path d="M5 13l-2 6h18l-2-6"></path>
-                    <path d="M12 13v8"></path>
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="6" r="2"></circle>
+                    <path d="M12 10v6"></path>
+                    <path d="M8 10h8"></path>
+                    <path d="M9 20l3-4 3 4"></path>
                 </svg>
             </button>
         </div>
@@ -420,7 +421,7 @@
             <p style="margin-bottom: 1rem;">Video demostrativo de LSM (Espacio reservado para el video oficial del gimnasio).</p>
             <div class="video-container">
                 <!-- VIDEO DEMO DE LSM -->
-                <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe id="lsmVideo" src="https://www.youtube.com/embed/M7lc1UVf-VE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -608,10 +609,33 @@
             }
         });
 
-        // 4. MODAL LSM
+        // 4. MODAL LSM (ARREGLADO)
         const lsmModal = document.getElementById('lsmModal');
-        function openLSM() { lsmModal.classList.add('active'); }
-        function closeLSM() { lsmModal.classList.remove('active'); }
+        const videoIframe = document.getElementById('lsmVideo');
+        const originalVideoSrc = videoIframe.src; // Guardamos el link original
+
+        function openLSM() { 
+            // Si la lectura por voz está activa, la apagamos para que no se mezcle
+            if (isSpeaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                ttsToggle.textContent = '🔊';
+            }
+            lsmModal.classList.add('active'); 
+        }
+
+        function closeLSM() { 
+            lsmModal.classList.remove('active'); 
+            // Vaciamos el iframe para detener el audio y el video en segundo plano
+            videoIframe.src = ""; 
+            // Lo restauramos después de 500ms para que esté listo para la próxima vez
+            setTimeout(() => { videoIframe.src = originalVideoSrc; }, 500);
+        }
+
+        // Extra: Cerrar el modal si se hace clic en el fondo oscuro (fuera de la cajita)
+        lsmModal.addEventListener('click', (e) => {
+            if (e.target === lsmModal) closeLSM();
+        });
 
         // 5. FORMULARIO
         const form = document.getElementById('inscripcionForm');
