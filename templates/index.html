@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kronox Gym - Transforma tu Cuerpo</title>
+    <style>
+        /* ============================================
+           PRINCIPIO IHC: CONSISTENCIA (Variables globales)
+           ============================================ */
+        :root {
+            --primary: #ff6b00;
+            --primary-dark: #cc5500;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --card-bg: #f9f9f9;
+            --border: #e0e0e0;
+            --success: #28a745;
+            --error: #dc3545;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --radius: 12px;
+        }
+
+        /* Modo oscuro (Naturalidad - preferencia del usuario) */
+        [data-theme="dark"] {
+            --bg: #1a1a1a;
+            --text: #f0f0f0;
+            --card-bg: #2a2a2a;
+            --border: #444;
+            --shadow: 0 4px 6px rgba(0,0,0,0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           NAVEGACIÓN (Chunking - Máximo 5 opciones)
+           ============================================ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* ============================================
+           SECCIÓN DE PLANES (Reconocimiento sobre recuerdo)
+           ============================================ */
+        .section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .card ul {
+            list-style: none;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .card ul li {
+            padding: 0.3rem 0;
+        }
+
+        .card ul li::before {
+            content: "✓ ";
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* ============================================
+           FORMULARIO (Prevención de errores + Feedback)
+           ============================================ */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group input.error {
+            border-color: var(--error);
+        }
+
+        .error-msg {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+
+        /* Barra de progreso (Recordar al usuario) */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        /* Spinner de carga (Feedback) */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Mensaje de éxito */
+        .success-msg {
+            display: none;
+            background: var(--success);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        /* ============================================
+           RESPONSIVE (Móvil)
+           ============================================ */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVEGACIÓN -->
+    <nav>
+        <div class="logo">KRONOX GYM</div>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#planes">Planes</a></li>
+            <li><a href="#inscripcion">Inscripción</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle">🌙 Modo Oscuro</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <h1>TRANSFORMA TU CUERPO</h1>
+        <p>Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento.</p>
+        <a href="#inscripcion" class="btn">¡Inscríbete Ahora!</a>
+    </section>
+
+    <!-- PLANES -->
+    <section class="section" id="planes">
+        <h2 class="section-title">Nuestros Planes</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Básico</h3>
+                <div class="price">$299<span style="font-size:1rem;">/mes</span></div>
+                <ul>
+                    <li>Acceso a sala de pesas</li>
+                    <li>Horario matutino</li>
+                    <li>Casillero</li>
+                </ul>
+                <a href="#inscripcion" class="btn" style="background:var(--primary);color:white;">Elegir</a>
+            </div>
+            <div class="card" style="border: 2px solid var(--primary);">
+                <h3>Premium</h3>
+                <div class="price">$499<span style="font-size:1rem;">/mes</span></div>
+                <ul>
+                    <li>Acceso total 24/7</li>
+                    <li>Zona cardiovascular</li>
+                    <li>Clases grupales</li>
+                    <li>Entrenador personal</li>
+                </ul>
+                <a href="#inscripcion" class="btn" style="background:var(--primary);color:white;">Elegir</a>
+            </div>
+            <div class="card">
+                <h3>Élite</h3>
+                <div class="price">$799<span style="font-size:1rem;">/mes</span></div>
+                <ul>
+                    <li>Todo lo de Premium</li>
+                    <li>Área VIP</li>
+                    <li>Nutriólogo</li>
+                    <li>Acceso a spa</li>
+                </ul>
+                <a href="#inscripcion" class="btn" style="background:var(--primary);color:white;">Elegir</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO DE INSCRIPCIÓN -->
+    <section class="section" id="inscripcion">
+        <h2 class="section-title">Inscripción</h2>
+        <div class="form-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <form id="inscripcionForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo *</label>
+                    <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+                    <span class="error-msg" id="error-nombre">Por favor, ingresa tu nombre.</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo electrónico *</label>
+                    <input type="email" id="email" placeholder="Ej: juan@email.com" required>
+                    <span class="error-msg" id="error-email">Ingresa un correo válido.</span>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono *</label>
+                    <input type="tel" id="telefono" placeholder="Ej: 7771234567" required>
+                    <span class="error-msg" id="error-telefono">Ingresa un teléfono de 10 dígitos.</span>
+                </div>
+                <div class="form-group">
+                    <label for="plan">Selecciona tu plan *</label>
+                    <select id="plan" required>
+                        <option value="">-- Elige un plan --</option>
+                        <option value="basico">Básico - $299/mes</option>
+                        <option value="premium">Premium - $499/mes</option>
+                        <option value="elite">Élite - $799/mes</option>
+                    </select>
+                    <span class="error-msg" id="error-plan">Selecciona un plan.</span>
+                </div>
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span class="spinner" id="spinner"></span>
+                    <span id="btnText">Enviar Inscripción</span>
+                </button>
+                <div class="success-msg" id="successMsg">
+                    ✅ ¡Inscripción exitosa! Te contactaremos pronto.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto">
+        <p><strong>Kronox Gym</strong> - Transforma tu Cuerpo</p>
+        <p>📍 Av. Universidad 123, Morelos | 📞 777-123-4567</p>
+        <p style="margin-top:1rem; font-size:0.9rem; color:var(--text); opacity:0.7;">
+            © 2026 Kronox Gym. Proyecto IHC - UAEM.
+        </p>
+    </footer>
+
+    <script>
+        // ============================================
+        // MODO OSCURO (Naturalidad)
+        // ============================================
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️ Modo Claro';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙 Modo Oscuro';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️ Modo Claro';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // ============================================
+        // FORMULARIO: Validación + Feedback + Progreso
+        // ============================================
+        const form = document.getElementById('inscripcionForm');
+        const nombre = document.getElementById('nombre');
+        const email = document.getElementById('email');
+        const telefono = document.getElementById('telefono');
+        const plan = document.getElementById('plan');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const successMsg = document.getElementById('successMsg');
+        const progressFill = document.getElementById('progressFill');
+
+        // Actualizar barra de progreso
+        function updateProgress() {
+            let filled = 0;
+            if (nombre.value.trim() !== '') filled++;
+            if (email.value.trim() !== '') filled++;
+            if (telefono.value.trim() !== '') filled++;
+            if (plan.value !== '') filled++;
+            progressFill.style.width = (filled / 4 * 100) + '%';
+        }
+
+        [nombre, email, telefono, plan].forEach(el => {
+            el.addEventListener('input', updateProgress);
+            el.addEventListener('change', updateProgress);
+        });
+
+        // Validación en tiempo real
+        function validateField(input, errorId, condition) {
+            const errorEl = document.getElementById(errorId);
+            if (condition) {
+                input.classList.remove('error');
+                errorEl.classList.remove('show');
+                return true;
+            } else {
+                input.classList.add('error');
+                errorEl.classList.add('show');
+                return false;
+            }
+        }
+
+        nombre.addEventListener('blur', () => {
+            validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
+        });
+
+        email.addEventListener('blur', () => {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            validateField(email, 'error-email', re.test(email.value));
+        });
+
+        telefono.addEventListener('blur', () => {
+            validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
+        });
+
+        plan.addEventListener('change', () => {
+            validateField(plan, 'error-plan', plan.value !== '');
+        });
+
+        // ============================================
+        // ENVÍO REAL A PYTHON (AQUÍ ESTÁ LA CONEXIÓN)
+        // ============================================
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Evita que la página se recargue
+
+            // 1. Validar todo antes de enviar
+            const isNombreValid = validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
+            const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isEmailValid = validateField(email, 'error-email', reEmail.test(email.value));
+            const isTelefonoValid = validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
+            const isPlanValid = validateField(plan, 'error-plan', plan.value !== '');
+
+            if (!isNombreValid || !isEmailValid || !isTelefonoValid || !isPlanValid) {
+                return; // No enviar si hay errores
+            }
+
+            // 2. Mostrar spinner (Feedback visual)
+            submitBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Guardando en la nube...';
+            successMsg.classList.remove('show');
+
+            // 3. Enviar datos a Python (Flask)
+            try {
+                const response = await fetch('/api/inscribir', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nombre: nombre.value,
+                        email: email.value,
+                        telefono: telefono.value,
+                        plan: plan.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Éxito: El servidor guardó los datos
+                    spinner.style.display = 'none';
+                    btnText.textContent = 'Enviar Inscripción';
+                    submitBtn.disabled = false;
+                    successMsg.textContent = '✅ ' + data.mensaje;
+                    successMsg.style.backgroundColor = 'var(--success)';
+                    successMsg.classList.add('show');
+                    form.reset();
+                    progressFill.style.width = '0%';
+                    
+                    setTimeout(() => successMsg.classList.remove('show'), 5000);
+                } else {
+                    throw new Error(data.error || 'Error desconocido en el servidor');
+                }
+            } catch (error) {
+                // Error de red o del servidor
+                spinner.style.display = 'none';
+                btnText.textContent = 'Enviar Inscripción';
+                submitBtn.disabled = false;
+                successMsg.textContent = '❌ ' + error.message;
+                successMsg.style.backgroundColor = 'var(--error)';
+                successMsg.classList.add('show');
+            }
+        });
+    </script>
+</body>
+</html>
