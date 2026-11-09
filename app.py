@@ -3,8 +3,6 @@ import sqlite3
 import os
 
 app = Flask(__name__)
-
-# Base de datos (se crea sola en la misma carpeta)
 DATABASE = 'kronox_gym.db'
 
 def init_db():
@@ -43,11 +41,12 @@ def inscribir():
         )
         conn.commit()
         conn.close()
-        return jsonify({'mensaje': '¡Inscripción guardada exitosamente!'}), 201
+        # Feedback personalizado (IHC: Satisfacción)
+        return jsonify({'mensaje': f"¡Felicidades {datos['nombre']}, ya estás inscrito en el plan {datos['plan']}!"}), 201
     except Exception as e:
         return jsonify({'error': f'Error al guardar: {str(e)}'}), 500
 
-# Ruta extra para que TÚ veas los datos guardados (útil para tu demo de IHC)
+# --- PANEL DE ADMINISTRACIÓN CON DISEÑO (IHC: Consistencia) ---
 @app.route('/admin/inscripciones')
 def ver_inscripciones():
     conn = sqlite3.connect(DATABASE)
@@ -55,11 +54,39 @@ def ver_inscripciones():
     cursor.execute('SELECT id, nombre, email, telefono, plan, fecha_registro FROM inscripciones ORDER BY id DESC')
     filas = cursor.fetchall()
     conn.close()
-    html = "<h1>Inscripciones Registradas</h1><table border='1' cellpadding='8'>"
-    html += "<tr><th>ID</th><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Plan</th><th>Fecha</th></tr>"
+    
+    # HTML con el mismo diseño de la página principal
+    html = """
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin - Kronox Gym</title>
+        <style>
+            body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; color: #222; padding: 2rem; }
+            h1 { color: #8B0000; text-transform: uppercase; border-bottom: 3px solid #8B0000; padding-bottom: 10px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+            th { background: #8B0000; color: white; padding: 12px; text-align: left; }
+            td { padding: 12px; border-bottom: 1px solid #ddd; }
+            tr:hover { background: #f1f1f1; }
+            .btn { display: inline-block; margin-top: 1rem; padding: 10px 20px; background: #8B0000; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+            .btn:hover { background: #5c0000; }
+        </style>
+    </head>
+    <body>
+        <h1>Panel de Control - Inscripciones</h1>
+        <table>
+            <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Plan</th><th>Fecha</th></tr>
+    """
     for f in filas:
         html += f"<tr><td>{f[0]}</td><td>{f[1]}</td><td>{f[2]}</td><td>{f[3]}</td><td>{f[4]}</td><td>{f[5]}</td></tr>"
-    html += "</table><br><a href='/'>Volver al inicio</a>"
+    html += """
+        </table>
+        <a href="/" class="btn">← Volver al Gimnasio</a>
+    </body>
+    </html>
+    """
     return html
 
 if __name__ == '__main__':
