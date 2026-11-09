@@ -5,38 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kronox Gym - Transforma tu Cuerpo</title>
     <style>
-        /* PALETA DE COLORES GIMNASIO */
+        /* PALETA DE COLORES GIMNASIO (Rojo Neón y Gris Profundo) */
         :root {
-            --primary: #8B0000; 
-            --primary-dark: #5c0000;
-            --accent: #B22222; 
+            --primary: #E60000; /* Rojo Neón */
+            --primary-dark: #B30000;
+            --accent: #FF3333; 
+            --bg: #121212; /* Fondo oscuro profundo */
+            --text: #f0f0f0;
+            --card-bg: #1E1E1E; /* Gris oscuro para tarjetas */
+            --border: #333333;
+            --success: #00E676; /* Verde neón */
+            --error: #FF1744;
+            --shadow: 0 8px 20px rgba(0,0,0,0.5);
+            --radius: 12px; 
+            --font-base: 16px;
+        }
+
+        /* Modo Claro (Opcional para accesibilidad) */
+        [data-theme="light"] {
             --bg: #f4f4f4;
             --text: #222222;
             --card-bg: #ffffff;
             --border: #d1d1d1;
-            --success: #2e7d32;
-            --error: #c62828;
             --shadow: 0 4px 10px rgba(0,0,0,0.1);
-            --radius: 8px; 
-            --font-base: 16px;
         }
 
-        [data-theme="dark"] {
-            --bg: #121212;
-            --text: #e0e0e0;
-            --card-bg: #1e1e1e;
-            --border: #333333;
-            --shadow: 0 4px 10px rgba(0,0,0,0.6);
-        }
-
+        /* Filtros de Daltonismo */
         html[data-filter="protanopia"] { filter: url('#protanopia'); }
         html[data-filter="deuteranopia"] { filter: url('#deuteranopia'); }
         html[data-filter="tritanopia"] { filter: url('#tritanopia'); }
 
+        /* Alto Contraste */
         html[data-contrast="high"] {
             --bg: #000000;
             --text: #ffffff;
-            --card-bg: #111111;
+            --card-bg: #000000;
             --border: #ffffff;
             --primary: #ffcc00; 
             --primary-dark: #ffcc00;
@@ -49,7 +52,16 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { font-size: var(--font-base); transition: font-size 0.2s, filter 0.3s; }
-        body { background-color: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; line-height: 1.6; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            transition: background 0.3s, color 0.3s; 
+            line-height: 1.6;
+            /* Patrón de fondo sutil para no verse plano */
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
 
         /* NAVEGACIÓN */
         nav {
@@ -74,7 +86,7 @@
         /* CONTROLES FLOTANTES */
         .floating-controls {
             position: fixed; top: 90px; right: 20px;
-            display: flex; flex-direction: column; gap: 10px;
+            display: flex; flex-direction: column; gap: 15px;
             z-index: 150; transition: all 0.3s;
         }
 
@@ -83,9 +95,10 @@
             color: var(--text); padding: 0.5rem; border-radius: 50%; 
             cursor: pointer; font-size: 1.2rem; transition: all 0.2s;
             display: flex; align-items: center; justify-content: center;
-            width: 45px; height: 45px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); font-weight: bold;
+            width: 45px; height: 45px; box-shadow: 0 4px 6px rgba(0,0,0,0.5); font-weight: bold;
         }
         .icon-btn:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.1); }
+        .icon-btn svg { width: 24px; height: 24px; }
 
         /* PANEL DE ACCESIBILIDAD */
         .accessibility-panel {
@@ -103,16 +116,16 @@
         .acc-btn:hover, .acc-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         /* LANDING PAGE */
-        .hero { text-align: center; padding: 5rem 2rem; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover; color: white; }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 3px; }
+        .hero { text-align: center; padding: 6rem 2rem; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover; color: white; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 4px; text-shadow: 2px 2px 10px rgba(230,0,0,0.5); }
         .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; }
-        .btn { display: inline-block; padding: 0.8rem 2rem; background: var(--primary); color: white; text-decoration: none; border-radius: var(--radius); font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s, background 0.2s; text-transform: uppercase; letter-spacing: 1px; }
-        .btn:hover { transform: translateY(-2px); background: var(--primary-dark); }
+        .btn { display: inline-block; padding: 0.8rem 2rem; background: var(--primary); color: white; text-decoration: none; border-radius: var(--radius); font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s, background 0.2s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(230,0,0,0.4); }
+        .btn:hover { transform: translateY(-3px); background: var(--primary-dark); box-shadow: 0 6px 20px rgba(230,0,0,0.6); }
         .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
         .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; text-align: center; box-shadow: var(--shadow); transition: transform 0.2s; border-top: 4px solid var(--primary); }
-        .card:hover { transform: translateY(-5px); }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
         .card h3 { color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; }
         .price { font-size: 2.5rem; font-weight: 900; margin: 1rem 0; }
         .card ul { list-style: none; margin: 1.5rem 0; text-align: left; }
@@ -134,102 +147,118 @@
         .btn-submit { width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: var(--radius); font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; display: flex; justify-content: center; align-items: center; text-transform: uppercase; letter-spacing: 1px; }
         .btn-submit:hover { background: var(--primary-dark); }
         .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
-        .success-msg { display: none; background: var(--success); color: white; padding: 1rem; border-radius: var(--radius); margin-top: 1rem; text-align: center; font-weight: bold; }
+        .success-msg { display: none; background: var(--success); color: #000; padding: 1rem; border-radius: var(--radius); margin-top: 1rem; text-align: center; font-weight: bold; }
         .success-msg.show { display: block; }
         footer { text-align: center; padding: 2rem; background: var(--card-bg); border-top: 3px solid var(--primary); margin-top: 3rem; }
 
-        /* MODALES */
+        /* MODALES GENERALES */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 300; justify-content: center; align-items: center; }
         .modal.active { display: flex; }
-        .modal-content { background: var(--card-bg); padding: 2rem; border-radius: var(--radius); width: 90%; max-width: 700px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: var(--card-bg); padding: 2rem; border-radius: var(--radius); width: 90%; max-width: 700px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); }
         .close-modal { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: var(--text); background: none; border: none; }
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 1rem; border-radius: var(--radius); }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         /* =========================================
-           NUEVA INTERFAZ: PORTAL DE MIEMBRO
+           INTERFAZ DEL PORTAL (APP)
            ========================================= */
         #appDashboard {
-            display: none; /* Oculto por defecto */
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg);
-            z-index: 400; /* Asegura que tape la página principal */
-            overflow-y: auto;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 400; overflow-y: auto;
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* Barra lateral de navegación */
+        /* Barra lateral oculta por defecto (Estilo WhatsApp) */
         .app-sidebar {
-            width: 250px; background: var(--card-bg); border-right: 1px solid var(--border);
-            position: fixed; top: 0; left: 0; height: 100vh; padding: 2rem 1rem;
-            display: flex; flex-direction: column; z-index: 500;
+            position: fixed; top: 0; left: -300px; /* Oculto a la izquierda */
+            width: 280px; height: 100vh; background: var(--card-bg); 
+            border-right: 1px solid var(--border); padding: 2rem 1rem;
+            transition: left 0.3s ease; z-index: 500;
+            display: flex; flex-direction: column;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
         }
+        .app-sidebar.open { left: 0; }
         .app-sidebar .logo { text-align: center; margin-bottom: 2rem; }
         .app-nav { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
-        .app-nav li { padding: 1rem; border-radius: var(--radius); cursor: pointer; font-weight: bold; color: var(--text); transition: 0.2s; display: flex; align-items: center; gap: 10px; }
+        .app-nav li { padding: 1rem; border-radius: var(--radius); cursor: pointer; font-weight: bold; color: var(--text); transition: 0.2s; display: flex; align-items: center; gap: 15px; }
         .app-nav li:hover, .app-nav li.active { background: var(--primary); color: white; }
         
-        /* Cerrar sesión abajo del todo */
-        .app-nav .logout { margin-top: auto; color: var(--error); }
-        .app-nav .logout:hover { background: var(--error); color: white; }
+        .app-nav .logout { margin-top: auto; color: var(--error); border-top: 1px solid var(--border); padding-top: 1rem; border-radius: 0; }
+        .app-nav .logout:hover { background: var(--error); color: white; border-radius: var(--radius); }
 
-        /* Contenido principal de la app */
-        .app-content {
-            margin-left: 250px; padding: 2rem; min-height: 100vh;
-        }
+        /* Contenido principal */
+        .app-content { padding: 2rem; min-height: 100vh; transition: margin-left 0.3s; }
 
-        /* Header de la App (Perfil arriba a la derecha) */
+        /* Header Superior (Botón menú + Perfil) */
         .app-top-header {
-            display: flex; justify-content: flex-end; align-items: center;
-            margin-bottom: 2rem; gap: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
         }
 
-        /* Botón flotante de perfil */
+        .menu-btn {
+            background: var(--card-bg); border: 1px solid var(--border);
+            color: var(--text); padding: 0.5rem; border-radius: var(--radius);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .menu-btn:hover { background: var(--primary); color: white; }
+
+        .header-right { display: flex; align-items: center; gap: 15px; }
+
+        /* Separador visual */
+        .divider-vertical { width: 1px; height: 30px; background: var(--border); }
+
+        /* Botón de perfil */
         .profile-btn {
             background: var(--card-bg); border: 2px solid var(--primary);
-            color: var(--primary); width: 45px; height: 45px; border-radius: 50%;
+            color: var(--primary); width: 40px; height: 40px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.2rem; font-weight: bold; cursor: pointer;
-            box-shadow: var(--shadow); transition: 0.2s;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 0 10px rgba(230,0,0,0.3); transition: 0.2s;
         }
         .profile-btn:hover { background: var(--primary); color: white; }
 
-        /* Ventanita flotante de perfil (Popover) */
+        /* Popover de perfil */
         .profile-popover {
-            display: none; position: absolute; top: 80px; right: 30px;
+            display: none; position: absolute; top: 70px; right: 20px;
             background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             padding: 1.5rem; z-index: 600; width: 280px; text-align: center;
         }
         .profile-popover.active { display: block; }
-        .profile-popover .avatar {
-            width: 60px; height: 60px; background: var(--primary); color: white;
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; font-weight: bold; margin: 0 auto 10px;
-        }
+        .profile-popover .avatar { width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 10px; }
         .profile-popover h3 { color: var(--primary); font-size: 1.2rem; }
         .profile-popover p { font-size: 0.9rem; margin-bottom: 1rem; }
         .profile-popover .stats { display: flex; justify-content: space-around; background: var(--bg); padding: 10px; border-radius: var(--radius); margin-bottom: 1rem; }
         .profile-popover .stats div { text-align: center; }
         .profile-popover .stats h4 { color: var(--primary); font-size: 1.2rem; }
 
-        /* Vistas de la App (Inicio, Rutinas) */
+        /* Vistas */
         .app-view { display: none; animation: fadeIn 0.3s ease; }
         .app-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .app-header { margin-bottom: 2rem; }
+        .app-header { margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; }
         .app-header h1 { color: var(--primary); font-size: 2rem; }
 
-        /* Tarjetas del Dashboard */
+        /* Botón de ayuda LSM contextual */
+        .lsm-help-btn {
+            background: var(--card-bg); border: 1px solid var(--border);
+            color: var(--primary); padding: 0.5rem 1rem; border-radius: var(--radius);
+            cursor: pointer; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 5px;
+        }
+        .lsm-help-btn:hover { background: var(--primary); color: white; }
+
+        /* Tarjetas */
         .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .pf-card { background: var(--card-bg); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); }
-        .pf-card h3 { color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+        .pf-card { background: var(--card-bg); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); transition: 0.2s; }
+        .pf-card:hover { border-color: var(--primary); }
+        .pf-card h3 { color: var(--text); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; }
         
         .qr-box { width: 150px; height: 150px; background: white; border: 4px solid #000; margin: 0 auto; display: flex; justify-content: center; align-items: center; color: #000; font-weight: bold; font-size: 0.8rem; text-align: center; padding: 10px; border-radius: 10px; }
 
         .crowd-meter { display: flex; flex-direction: column; align-items: center; margin-top: 1rem; }
-        .crowd-circle { width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(var(--primary) 65%, #ddd 0); display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; color: var(--text); position: relative; }
+        .crowd-circle { width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(var(--primary) 65%, #333 0); display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; color: var(--text); position: relative; }
         .crowd-circle::before { content: ""; position: absolute; width: 80px; height: 80px; background: var(--card-bg); border-radius: 50%; }
         .crowd-circle span { position: relative; z-index: 1; }
         .crowd-status { margin-top: 10px; font-weight: bold; color: var(--success); }
@@ -239,18 +268,11 @@
         .routine-list li:last-child { border-bottom: none; }
         .routine-badge { background: var(--primary); color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; }
 
-        /* RESPONSIVO PARA APP */
+        /* RESPONSIVO */
         @media (max-width: 768px) {
-            .app-sidebar {
-                width: 100%; height: auto; bottom: 0; top: auto;
-                flex-direction: row; padding: 0.5rem; justify-content: space-around;
-                border-right: none; border-top: 1px solid var(--border);
-            }
-            .app-sidebar .logo { display: none; }
-            .app-nav { flex-direction: row; gap: 0; width: 100%; justify-content: space-around; }
-            .app-nav li { padding: 0.8rem; font-size: 0.8rem; flex-direction: column; gap: 5px; }
-            .app-nav .logout { margin-top: 0; }
-            .app-content { margin-left: 0; padding-bottom: 80px; }
+            .app-content { padding: 1rem; }
+            .dash-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -277,10 +299,14 @@
         </nav>
 
         <div class="floating-controls">
-            <button class="icon-btn" id="ttsToggle" title="Lectura en Voz Alta">🔊</button>
-            <button class="icon-btn" id="themeToggle" title="Cambiar Tema">🌙</button>
+            <button class="icon-btn" id="ttsToggle" title="Lectura en Voz Alta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+            <button class="icon-btn" id="themeToggle" title="Cambiar Tema">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
             <button class="icon-btn" id="accToggle" title="Opciones de Accesibilidad">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
             </button>
         </div>
 
@@ -307,10 +333,6 @@
                 <label>Contraste</label>
                 <div class="acc-options"><button class="acc-btn" id="contrastBtn" onclick="toggleContrast(this)">Activar Alto Contraste</button></div>
             </div>
-            <div class="acc-group">
-                <label>Lengua de Señas (LSM)</label>
-                <div class="acc-options"><button class="acc-btn" onclick="openLSM()" style="background: var(--primary); color: white;">🤟 Ver Tutorial en LSM</button></div>
-            </div>
         </div>
 
         <section class="hero" id="inicio">
@@ -328,11 +350,11 @@
                     <ul><li>Acceso a sala de pesas</li><li>Horario matutino</li><li>Casillero</li></ul>
                     <a href="#inscripcion" class="btn">Elegir</a>
                 </div>
-                <div class="card" style="border-top: 4px solid var(--accent);">
+                <div class="card" style="border-top: 4px solid var(--primary);">
                     <h3>Premium</h3>
                     <div class="price">$499<span style="font-size:1rem;font-weight:normal;">/mes</span></div>
                     <ul><li>Acceso total 24/7</li><li>Zona cardiovascular</li><li>Clases grupales</li><li>Entrenador personal</li></ul>
-                    <a href="#inscripcion" class="btn" style="background: var(--accent);">Elegir</a>
+                    <a href="#inscripcion" class="btn" style="background: var(--primary);">Elegir</a>
                 </div>
                 <div class="card">
                     <h3>Élite</h3>
@@ -381,8 +403,7 @@
                         </button>
                     </div>
                     <div class="success-msg" id="successMsg">
-                        <span style="font-size: 1.2rem; margin-right: 5px;">✔</span>
-                        <span id="successText">¡Inscripción exitosa!</span>
+                        <span id="successText">✔ ¡Inscripción exitosa!</span>
                     </div>
                 </form>
             </div>
@@ -400,20 +421,52 @@
                 <button class="close-modal" onclick="cerrarLogin()">✕</button>
                 <h2 style="color: var(--primary); margin-bottom: 1rem;">Iniciar Sesión</h2>
                 <p style="margin-bottom: 1rem; font-size: 0.9rem;">Ingresa tu correo para acceder a tu portal.</p>
-                <div class="form-group" style="text-align: left;">
-                    <label>Correo electrónico</label>
-                    <input type="email" id="loginEmail" placeholder="Ej: dulce@email.com">
-                </div>
-                <div class="form-group" style="text-align: left;">
-                    <label>Contraseña</label>
-                    <input type="password" placeholder="********">
-                </div>
-                <button class="btn-submit" onclick="simularLogin()">Entrar a mi cuenta</button>
+                <form onsubmit="event.preventDefault(); simularLogin();">
+                    <div class="form-group" style="text-align: left;">
+                        <label>Correo electrónico</label>
+                        <input type="email" id="loginEmail" placeholder="Ej: dulce@email.com" required>
+                    </div>
+                    <div class="form-group" style="text-align: left;">
+                        <label>Contraseña</label>
+                        <input type="password" placeholder="********" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Entrar a mi cuenta</button>
+                </form>
                 <p style="margin-top: 1rem; font-size: 0.8rem; color: #888;">(Simulación: Cualquier correo funcionará)</p>
             </div>
         </div>
 
-        <!-- MODAL LSM -->
+        <!-- MODAL HORARIOS (NUEVO) -->
+        <div class="modal" id="horariosModal">
+            <div class="modal-content">
+                <button class="close-modal" onclick="cerrarHorarios()">✕</button>
+                <h2 style="color: var(--primary); margin-bottom: 1rem;">Horarios de Clases</h2>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; margin-top: 1rem; color: var(--text);">
+                        <tr style="background: var(--primary); color: white;">
+                            <th style="padding: 10px;">Hora</th>
+                            <th style="padding: 10px;">Lunes</th>
+                            <th style="padding: 10px;">Miércoles</th>
+                            <th style="padding: 10px;">Viernes</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px;">07:00</td>
+                            <td style="padding: 10px;">Spinning</td>
+                            <td style="padding: 10px;">Crossfit</td>
+                            <td style="padding: 10px;">Yoga</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 10px;">18:00</td>
+                            <td style="padding: 10px;">Zumba</td>
+                            <td style="padding: 10px;">Pesas</td>
+                            <td style="padding: 10px;">Boxeo</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL LSM GENERAL -->
         <div class="modal" id="lsmModal">
             <div class="modal-content">
                 <button class="close-modal" onclick="closeLSM()">✕</button>
@@ -429,22 +482,13 @@
     <!-- 2. VISTA PRIVADA (Portal de Miembro) -->
     <!-- ========================================== -->
     <div id="appDashboard">
-        <!-- Controles de accesibilidad flotantes para la app -->
-        <div class="floating-controls" style="z-index: 600;">
-            <button class="icon-btn" id="ttsToggleApp" title="Lectura en Voz Alta">🔊</button>
-            <button class="icon-btn" id="themeToggleApp" title="Cambiar Tema">🌙</button>
-            <button class="icon-btn" id="accToggleApp" title="Opciones de Accesibilidad">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
-            </button>
-        </div>
-
-        <!-- Barra Lateral -->
-        <aside class="app-sidebar">
+        
+        <!-- Barra Lateral (Menú estilo WhatsApp) -->
+        <aside class="app-sidebar" id="appSidebar">
             <div class="logo">Kronox App</div>
             <ul class="app-nav">
                 <li class="active" onclick="switchView('inicio', this)">🏠 Inicio</li>
                 <li onclick="switchView('rutinas', this)">🏋️ Mis Rutinas</li>
-                <!-- CERRAR SESIÓN MOVIDO AQUÍ -->
                 <li class="logout" onclick="cerrarSesion()">🚪 Cerrar Sesión</li>
             </ul>
         </aside>
@@ -452,9 +496,31 @@
         <!-- Contenido Dinámico -->
         <main class="app-content">
             
-            <!-- Header superior con Perfil a la derecha -->
+            <!-- Header Superior -->
             <div class="app-top-header">
-                <button class="profile-btn" onclick="toggleProfilePopover()">D</button>
+                <!-- Botón de Menú (Hamburguesa) -->
+                <button class="menu-btn" onclick="toggleSidebar()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+
+                <div class="header-right">
+                    <!-- Botones de Accesibilidad Flotantes -->
+                    <button class="icon-btn" id="ttsToggleApp" title="Lectura en Voz Alta" style="width: 35px; height: 35px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                    <button class="icon-btn" id="themeToggleApp" title="Cambiar Tema" style="width: 35px; height: 35px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                    <button class="icon-btn" id="accToggleApp" title="Opciones de Accesibilidad" style="width: 35px; height: 35px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
+                    </button>
+
+                    <!-- Separador Visual -->
+                    <div class="divider-vertical"></div>
+
+                    <!-- Botón de Perfil -->
+                    <button class="profile-btn" onclick="toggleProfilePopover()">D</button>
+                </div>
             </div>
 
             <!-- Ventanita flotante de Perfil -->
@@ -463,7 +529,6 @@
                 <h3>Dulce María</h3>
                 <p style="color: var(--primary); font-weight: bold;">Miembro Premium</p>
                 <p style="color: #888; margin-bottom: 1rem;">Desde: Enero 2026</p>
-                
                 <div class="stats">
                     <div><h4>12</h4><p>Visitas</p></div>
                     <div><h4>8</h4><p>Clases</p></div>
@@ -474,20 +539,27 @@
             <!-- VISTA 1: INICIO -->
             <div id="view-inicio" class="app-view active">
                 <div class="app-header">
-                    <h1>¡Hola, Dulce María!</h1>
-                    <p style="color: #888;">Plan Premium activo</p>
+                    <div>
+                        <h1>¡Hola, Dulce María!</h1>
+                        <p style="color: #888;">Plan Premium activo</p>
+                    </div>
+                    <!-- Botón LSM Contextual -->
+                    <button class="lsm-help-btn" onclick="openLSM()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 1 1 3 0m-3 6a1.5 1.5 0 0 1-3 0v-5a1.5 1.5 0 1 1 3 0m0 3.5v-4a1.5 1.5 0 1 1 3 0m0 1.5v-2a1.5 1.5 0 1 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-5"></path></svg>
+                        Ayuda LSM
+                    </button>
                 </div>
 
                 <div class="dash-grid">
                     <div class="pf-card" style="text-align: center;">
-                        <h3 style="justify-content: center;">📱 Mi Pase Digital</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 1rem;">Escanea este código en la entrada.</p>
-                        <div class="qr-box">[ CÓDIGO QR SIMULADO ]<br>KRONOX-2026</div>
+                        <h3 style="justify-content: center;">Mi Pase Digital</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 1rem; color: #888;">Escanea este código en la entrada.</p>
+                        <div class="qr-box">[ CÓDIGO QR ]<br>KRONOX-2026</div>
                     </div>
 
                     <div class="pf-card">
-                        <h3>🏋️ Aforo del Gimnasio</h3>
-                        <p style="font-size: 0.9rem;">El gym está moderado hoy.</p>
+                        <h3>Aforo del Gimnasio</h3>
+                        <p style="font-size: 0.9rem; color: #888;">El gym está moderado hoy.</p>
                         <div class="crowd-meter">
                             <div class="crowd-circle"><span>65%</span></div>
                             <p class="crowd-status">● Moderado</p>
@@ -495,11 +567,11 @@
                     </div>
 
                     <div class="pf-card">
-                        <h3>⏰ Próxima Clase</h3>
-                        <p style="font-size: 0.9rem; margin-top: 1rem;"><strong>Boxeo</strong></p>
-                        <p style="font-size: 0.9rem;">Hoy a las 18:00 hrs</p>
-                        <p style="font-size: 0.9rem; color: #888;">Salón B - Entrenador: Carlos</p>
-                        <button class="btn" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;">Ver Horarios</button>
+                        <h3>Próxima Clase</h3>
+                        <p style="font-size: 1.1rem; margin-top: 1rem; font-weight: bold;">Boxeo</p>
+                        <p style="font-size: 0.9rem; color: #888;">Hoy a las 18:00 hrs - Salón B</p>
+                        <!-- BOTÓN FUNCIONAL -->
+                        <button class="btn" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;" onclick="abrirHorarios()">Ver Horarios</button>
                     </div>
                 </div>
             </div>
@@ -507,8 +579,14 @@
             <!-- VISTA 2: RUTINAS -->
             <div id="view-rutinas" class="app-view">
                 <div class="app-header">
-                    <h1>Mis Rutinas</h1>
-                    <p style="color: #888;">Plan de entrenamiento personalizado</p>
+                    <div>
+                        <h1>Mis Rutinas</h1>
+                        <p style="color: #888;">Plan de entrenamiento personalizado</p>
+                    </div>
+                    <button class="lsm-help-btn" onclick="openLSM()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 1 1 3 0m-3 6a1.5 1.5 0 0 1-3 0v-5a1.5 1.5 0 1 1 3 0m0 3.5v-4a1.5 1.5 0 1 1 3 0m0 1.5v-2a1.5 1.5 0 1 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-5"></path></svg>
+                        Ayuda LSM
+                    </button>
                 </div>
                 
                 <div class="pf-card" style="margin-bottom: 1.5rem;">
@@ -533,7 +611,7 @@
         </main>
     </div>
 
-    <!-- PANEL DE ACCESIBILIDAD FLOTANTE (Compartido) -->
+    <!-- PANEL DE ACCESIBILIDAD FLOTANTE (Para App) -->
     <div class="accessibility-panel" id="accPanelApp" style="z-index: 700;">
         <h3>Accesibilidad Universal</h3>
         <div class="acc-group">
@@ -567,25 +645,25 @@
         const themeToggleApp = document.getElementById('themeToggleApp');
         
         function toggleTheme() {
-            if (html.getAttribute('data-theme') === 'dark') {
+            if (html.getAttribute('data-theme') === 'light') {
                 html.removeAttribute('data-theme');
-                themeToggle.textContent = '🌙'; themeToggleApp.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️'; themeToggleApp.textContent = '☀️';
+                themeToggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+                themeToggleApp.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
                 localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+                themeToggleApp.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+                localStorage.setItem('theme', 'light');
             }
         }
 
-        if (localStorage.getItem('theme') === 'dark') {
-            html.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️'; themeToggleApp.textContent = '☀️';
+        if (localStorage.getItem('theme') === 'light') {
+            html.setAttribute('data-theme', 'light');
         }
         themeToggle.addEventListener('click', toggleTheme);
         themeToggleApp.addEventListener('click', toggleTheme);
 
-        // Paneles de accesibilidad
         const accToggle = document.getElementById('accToggle');
         const accPanel = document.getElementById('accPanel');
         const accToggleApp = document.getElementById('accToggleApp');
@@ -600,48 +678,26 @@
             else if (action === '+2px') currentFontSize += 2;
             else if (action === '-2px' && currentFontSize > 10) currentFontSize -= 2;
             html.style.setProperty('--font-base', currentFontSize + 'px');
-            document.querySelectorAll('.acc-group').forEach(group => {
-                group.querySelectorAll('.acc-btn').forEach(btn => btn.classList.remove('active'));
-            });
-            // Activar el botón correcto en ambos paneles
-            document.querySelectorAll('.acc-group').forEach(group => {
-                if (action === 'reset') group.querySelectorAll('.acc-btn')[1]?.classList.add('active');
-                if (action === '+2px') group.querySelectorAll('.acc-btn')[2]?.classList.add('active');
-                if (action === '-2px') group.querySelectorAll('.acc-btn')[0]?.classList.add('active');
-            });
         }
 
         function setFilter(type, btn) {
             if (type === 'none') html.removeAttribute('data-filter');
             else html.setAttribute('data-filter', type);
-            
-            // Quitar active de todos los botones de filtro en ambos paneles
             document.querySelectorAll('.acc-group:nth-child(2) .acc-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            // Sincronizar el otro panel
-            const otherPanelBtns = btn.closest('.accessibility-panel').id === 'accPanel' 
-                ? accPanelApp.querySelectorAll('.acc-btn') 
-                : accPanel.querySelectorAll('.acc-btn');
-            otherPanelBtns.forEach(b => b.classList.remove('active'));
-            // Encontrar el botón equivalente y activarlo
-            const text = btn.textContent;
-            otherPanelBtns.forEach(b => { if(b.textContent === text) b.classList.add('active'); });
         }
 
         function toggleContrast(btn) {
             if (html.getAttribute('data-contrast') === 'high') {
                 html.removeAttribute('data-contrast');
                 document.querySelectorAll('#contrastBtn, #contrastBtnApp').forEach(b => {
-                    b.classList.remove('active');
-                    b.textContent = 'Activar Alto Contraste';
+                    b.classList.remove('active'); b.textContent = 'Activar Alto Contraste';
                 });
             } else {
                 html.setAttribute('data-contrast', 'high');
                 document.querySelectorAll('#contrastBtn, #contrastBtnApp').forEach(b => {
-                    b.classList.add('active');
-                    b.textContent = 'Desactivar Alto Contraste';
+                    b.classList.add('active'); b.textContent = 'Desactivar Alto Contraste';
                 });
-                html.removeAttribute('data-filter');
             }
         }
 
@@ -650,30 +706,23 @@
             if (isSpeaking) {
                 window.speechSynthesis.cancel();
                 isSpeaking = false;
-                document.getElementById('ttsToggle').textContent = '🔊';
-                document.getElementById('ttsToggleApp').textContent = '🔊';
             } else {
-                const text = "Bienvenido a tu portal de Kronox Gym. Aquí puedes ver tu pase digital, el aforo del gimnasio y tus rutinas.";
+                const text = "Bienvenido a tu portal de Kronox Gym. Aquí puedes ver tu pase digital y tus rutinas.";
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'es-MX';
-                utterance.onend = () => { 
-                    isSpeaking = false; 
-                    document.getElementById('ttsToggle').textContent = '🔊';
-                    document.getElementById('ttsToggleApp').textContent = '🔊';
-                };
+                utterance.onend = () => { isSpeaking = false; };
                 window.speechSynthesis.speak(utterance);
                 isSpeaking = true;
-                document.getElementById('ttsToggle').textContent = '⏹️';
-                document.getElementById('ttsToggleApp').textContent = '⏹️';
             }
         }
-        document.getElementById('ttsToggle').addEventListener('click', (e) => toggleTTS(e.target));
-        document.getElementById('ttsToggleApp').addEventListener('click', (e) => toggleTTS(e.target));
+        document.getElementById('ttsToggle').addEventListener('click', (e) => toggleTTS(e.currentTarget));
+        document.getElementById('ttsToggleApp').addEventListener('click', (e) => toggleTTS(e.currentTarget));
 
-        // 2. LOGIN Y NAVEGACIÓN DE LA APP
+        // 2. LOGIN Y APLICACIÓN
         const loginModal = document.getElementById('loginModal');
         const publicSite = document.getElementById('publicSite');
         const appDashboard = document.getElementById('appDashboard');
+        const appSidebar = document.getElementById('appSidebar');
 
         function abrirLogin() { loginModal.classList.add('active'); }
         function cerrarLogin() { loginModal.classList.remove('active'); }
@@ -685,16 +734,23 @@
                 publicSite.style.display = 'none'; 
                 appDashboard.style.display = 'block'; 
                 window.scrollTo(0, 0); 
-            } else {
-                alert("Por favor, ingresa un correo para simular el inicio de sesión.");
             }
         }
 
+        // CERRAR SESIÓN CON CONFIRMACIÓN
         function cerrarSesion() {
-            appDashboard.style.display = 'none';
-            publicSite.style.display = 'block';
-            switchView('inicio', document.querySelector('.app-nav li'));
-            document.getElementById('profilePopover').classList.remove('active');
+            if (confirm("¿Estás seguro que deseas cerrar sesión?")) {
+                appDashboard.style.display = 'none';
+                publicSite.style.display = 'block';
+                switchView('inicio', document.querySelector('.app-nav li'));
+                document.getElementById('profilePopover').classList.remove('active');
+                appSidebar.classList.remove('open');
+            }
+        }
+
+        // MENÚ HAMBURGUESA
+        function toggleSidebar() {
+            appSidebar.classList.toggle('open');
         }
 
         function switchView(viewName, navElement) {
@@ -703,27 +759,35 @@
             
             document.querySelectorAll('.app-nav li').forEach(li => li.classList.remove('active'));
             if(navElement) navElement.classList.add('active');
+            
+            // Cerrar menú al cambiar de vista
+            appSidebar.classList.remove('open');
         }
 
-        // 3. POPOVER DE PERFIL
+        // POPOVER DE PERFIL
         const profilePopover = document.getElementById('profilePopover');
         function toggleProfilePopover() {
             profilePopover.classList.toggle('active');
         }
-        // Cerrar popover si se hace clic fuera
         document.addEventListener('click', (e) => {
             if (!profilePopover.contains(e.target) && !e.target.closest('.profile-btn')) {
                 profilePopover.classList.remove('active');
             }
         });
 
-        // 4. FORMULARIO (Igual que antes)
+        // MODAL HORARIOS (NUEVO)
+        const horariosModal = document.getElementById('horariosModal');
+        function abrirHorarios() { horariosModal.classList.add('active'); }
+        function cerrarHorarios() { horariosModal.classList.remove('active'); }
+
+        // MODAL LSM
+        const lsmModal = document.getElementById('lsmModal');
+        function openLSM() { lsmModal.classList.add('active'); }
+        function closeLSM() { lsmModal.classList.remove('active'); }
+
+        // FORMULARIO (Mantén tu código de validación aquí)
         const form = document.getElementById('inscripcionForm');
-        // ... (Aquí va toda tu lógica del formulario que ya tenías, no la repetiré para no hacer el mensaje infinito, 
-        // pero asegúrate de mantenerla igual que en el código anterior)
-        
-        // NOTA: Si copiaste todo el bloque, asegúrate de no borrar las funciones del formulario
-        // que están al final del script original. 
+        // ... (Copia aquí tu función del formulario que ya tenías)
     </script>
 </body>
 </html>
