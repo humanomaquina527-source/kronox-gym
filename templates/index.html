@@ -7,23 +7,25 @@
     <style>
         /* PALETA DE COLORES GIMNASIO (Rojo Neón y Gris Profundo) */
         :root {
-            --primary: #E60000; /* Rojo Neón */
+            --primary: #E60000; 
             --primary-dark: #B30000;
             --accent: #FF3333; 
-            --bg: #121212; /* Fondo oscuro profundo */
+            --bg: #0a0a0a; /* Fondo casi negro */
+            --bg-gradient: radial-gradient(circle at top right, #2a0000 0%, #0a0a0a 50%); /* Degradado sutil */
             --text: #f0f0f0;
-            --card-bg: #1E1E1E; /* Gris oscuro para tarjetas */
-            --border: #333333;
-            --success: #00E676; /* Verde neón */
+            --card-bg: #161616; 
+            --border: #2a2a2a;
+            --success: #00E676; 
             --error: #FF1744;
-            --shadow: 0 8px 20px rgba(0,0,0,0.5);
+            --shadow: 0 8px 20px rgba(0,0,0,0.6);
             --radius: 12px; 
             --font-base: 16px;
         }
 
-        /* Modo Claro (Opcional para accesibilidad) */
+        /* Modo Claro */
         [data-theme="light"] {
             --bg: #f4f4f4;
+            --bg-gradient: radial-gradient(circle at top right, #ffe6e6 0%, #f4f4f4 50%);
             --text: #222222;
             --card-bg: #ffffff;
             --border: #d1d1d1;
@@ -38,6 +40,7 @@
         /* Alto Contraste */
         html[data-contrast="high"] {
             --bg: #000000;
+            --bg-gradient: #000000;
             --text: #ffffff;
             --card-bg: #000000;
             --border: #ffffff;
@@ -48,27 +51,24 @@
             --error: #ff3333; 
         }
         html[data-contrast="high"] .btn, html[data-contrast="high"] .btn-submit { color: #000 !important; }
-        html[data-contrast="high"] .card { border: 2px solid #ffffff; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { font-size: var(--font-base); transition: font-size 0.2s, filter 0.3s; }
         
         body { 
-            background-color: var(--bg); 
+            background: var(--bg-gradient); 
             color: var(--text); 
             transition: background 0.3s, color 0.3s; 
             line-height: 1.6;
-            /* Patrón de fondo sutil para no verse plano */
-            background-image: radial-gradient(var(--border) 1px, transparent 1px);
-            background-size: 20px 20px;
+            min-height: 100vh;
         }
 
         /* NAVEGACIÓN */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem; background: var(--card-bg);
+            padding: 1rem 2rem; background: rgba(22, 22, 22, 0.8); backdrop-filter: blur(10px);
             box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 2px solid var(--primary);
         }
 
         .logo { font-weight: 900; font-size: 1.5rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
@@ -117,7 +117,7 @@
 
         /* LANDING PAGE */
         .hero { text-align: center; padding: 6rem 2rem; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover; color: white; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 4px; text-shadow: 2px 2px 10px rgba(230,0,0,0.5); }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 4px; text-shadow: 2px 2px 15px rgba(230,0,0,0.6); }
         .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; }
         .btn { display: inline-block; padding: 0.8rem 2rem; background: var(--primary); color: white; text-decoration: none; border-radius: var(--radius); font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s, background 0.2s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(230,0,0,0.4); }
         .btn:hover { transform: translateY(-3px); background: var(--primary-dark); box-shadow: 0 6px 20px rgba(230,0,0,0.6); }
@@ -146,13 +146,12 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .btn-submit { width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: var(--radius); font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; display: flex; justify-content: center; align-items: center; text-transform: uppercase; letter-spacing: 1px; }
         .btn-submit:hover { background: var(--primary-dark); }
-        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
         .success-msg { display: none; background: var(--success); color: #000; padding: 1rem; border-radius: var(--radius); margin-top: 1rem; text-align: center; font-weight: bold; }
         .success-msg.show { display: block; }
         footer { text-align: center; padding: 2rem; background: var(--card-bg); border-top: 3px solid var(--primary); margin-top: 3rem; }
 
         /* MODALES GENERALES */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 300; justify-content: center; align-items: center; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 300; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal.active { display: flex; }
         .modal-content { background: var(--card-bg); padding: 2rem; border-radius: var(--radius); width: 90%; max-width: 700px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); }
         .close-modal { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: var(--text); background: none; border: none; }
@@ -164,67 +163,37 @@
            ========================================= */
         #appDashboard {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 400; overflow-y: auto;
-            background-image: radial-gradient(var(--border) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background: var(--bg-gradient); z-index: 400; overflow-y: auto;
         }
 
-        /* Barra lateral oculta por defecto (Estilo WhatsApp) */
         .app-sidebar {
-            position: fixed; top: 0; left: -300px; /* Oculto a la izquierda */
-            width: 280px; height: 100vh; background: var(--card-bg); 
-            border-right: 1px solid var(--border); padding: 2rem 1rem;
-            transition: left 0.3s ease; z-index: 500;
-            display: flex; flex-direction: column;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            position: fixed; top: 0; left: -300px; width: 280px; height: 100vh;
+            background: var(--card-bg); border-right: 1px solid var(--border);
+            padding: 2rem 1rem; transition: left 0.3s ease; z-index: 500;
+            display: flex; flex-direction: column; box-shadow: 10px 0 30px rgba(0,0,0,0.5);
         }
         .app-sidebar.open { left: 0; }
         .app-sidebar .logo { text-align: center; margin-bottom: 2rem; }
         .app-nav { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
         .app-nav li { padding: 1rem; border-radius: var(--radius); cursor: pointer; font-weight: bold; color: var(--text); transition: 0.2s; display: flex; align-items: center; gap: 15px; }
         .app-nav li:hover, .app-nav li.active { background: var(--primary); color: white; }
-        
         .app-nav .logout { margin-top: auto; color: var(--error); border-top: 1px solid var(--border); padding-top: 1rem; border-radius: 0; }
         .app-nav .logout:hover { background: var(--error); color: white; border-radius: var(--radius); }
 
-        /* Contenido principal */
         .app-content { padding: 2rem; min-height: 100vh; transition: margin-left 0.3s; }
 
-        /* Header Superior (Botón menú + Perfil) */
-        .app-top-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
-        }
+        .app-top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 
-        .menu-btn {
-            background: var(--card-bg); border: 1px solid var(--border);
-            color: var(--text); padding: 0.5rem; border-radius: var(--radius);
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-        }
+        .menu-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text); padding: 0.5rem; border-radius: var(--radius); cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .menu-btn:hover { background: var(--primary); color: white; }
 
         .header-right { display: flex; align-items: center; gap: 15px; }
-
-        /* Separador visual */
         .divider-vertical { width: 1px; height: 30px; background: var(--border); }
 
-        /* Botón de perfil */
-        .profile-btn {
-            background: var(--card-bg); border: 2px solid var(--primary);
-            color: var(--primary); width: 40px; height: 40px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.1rem; font-weight: bold; cursor: pointer;
-            box-shadow: 0 0 10px rgba(230,0,0,0.3); transition: 0.2s;
-        }
+        .profile-btn { background: var(--card-bg); border: 2px solid var(--primary); color: var(--primary); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px rgba(230,0,0,0.3); transition: 0.2s; }
         .profile-btn:hover { background: var(--primary); color: white; }
 
-        /* Popover de perfil */
-        .profile-popover {
-            display: none; position: absolute; top: 70px; right: 20px;
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            padding: 1.5rem; z-index: 600; width: 280px; text-align: center;
-        }
+        .profile-popover { display: none; position: absolute; top: 70px; right: 20px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.8); padding: 1.5rem; z-index: 600; width: 280px; text-align: center; }
         .profile-popover.active { display: block; }
         .profile-popover .avatar { width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 10px; }
         .profile-popover h3 { color: var(--primary); font-size: 1.2rem; }
@@ -233,7 +202,6 @@
         .profile-popover .stats div { text-align: center; }
         .profile-popover .stats h4 { color: var(--primary); font-size: 1.2rem; }
 
-        /* Vistas */
         .app-view { display: none; animation: fadeIn 0.3s ease; }
         .app-view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -241,15 +209,9 @@
         .app-header { margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; }
         .app-header h1 { color: var(--primary); font-size: 2rem; }
 
-        /* Botón de ayuda LSM contextual */
-        .lsm-help-btn {
-            background: var(--card-bg); border: 1px solid var(--border);
-            color: var(--primary); padding: 0.5rem 1rem; border-radius: var(--radius);
-            cursor: pointer; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 5px;
-        }
+        .lsm-help-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--primary); padding: 0.5rem 1rem; border-radius: var(--radius); cursor: pointer; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
         .lsm-help-btn:hover { background: var(--primary); color: white; }
 
-        /* Tarjetas */
         .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .pf-card { background: var(--card-bg); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); transition: 0.2s; }
         .pf-card:hover { border-color: var(--primary); }
@@ -268,7 +230,14 @@
         .routine-list li:last-child { border-bottom: none; }
         .routine-badge { background: var(--primary); color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; }
 
-        /* RESPONSIVO */
+        /* MODAL DE CERRAR SESIÓN PERSONALIZADO */
+        #logoutModal .modal-content {
+            max-width: 400px;
+        }
+        #logoutModal .modal-actions {
+            display: flex; gap: 10px; margin-top: 1.5rem;
+        }
+
         @media (max-width: 768px) {
             .app-content { padding: 1rem; }
             .dash-grid { grid-template-columns: 1fr; }
@@ -436,7 +405,7 @@
             </div>
         </div>
 
-        <!-- MODAL HORARIOS (NUEVO) -->
+        <!-- MODAL HORARIOS -->
         <div class="modal" id="horariosModal">
             <div class="modal-content">
                 <button class="close-modal" onclick="cerrarHorarios()">✕</button>
@@ -489,7 +458,7 @@
             <ul class="app-nav">
                 <li class="active" onclick="switchView('inicio', this)">🏠 Inicio</li>
                 <li onclick="switchView('rutinas', this)">🏋️ Mis Rutinas</li>
-                <li class="logout" onclick="cerrarSesion()">🚪 Cerrar Sesión</li>
+                <li class="logout" onclick="confirmarCerrarSesion()">🚪 Cerrar Sesión</li>
             </ul>
         </aside>
 
@@ -498,13 +467,11 @@
             
             <!-- Header Superior -->
             <div class="app-top-header">
-                <!-- Botón de Menú (Hamburguesa) -->
                 <button class="menu-btn" onclick="toggleSidebar()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
 
                 <div class="header-right">
-                    <!-- Botones de Accesibilidad Flotantes -->
                     <button class="icon-btn" id="ttsToggleApp" title="Lectura en Voz Alta" style="width: 35px; height: 35px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                     </button>
@@ -515,10 +482,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
                     </button>
 
-                    <!-- Separador Visual -->
                     <div class="divider-vertical"></div>
-
-                    <!-- Botón de Perfil -->
                     <button class="profile-btn" onclick="toggleProfilePopover()">D</button>
                 </div>
             </div>
@@ -543,7 +507,7 @@
                         <h1>¡Hola, Dulce María!</h1>
                         <p style="color: #888;">Plan Premium activo</p>
                     </div>
-                    <!-- Botón LSM Contextual -->
+                    <!-- Botón LSM Funcional -->
                     <button class="lsm-help-btn" onclick="openLSM()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 1 1 3 0m-3 6a1.5 1.5 0 0 1-3 0v-5a1.5 1.5 0 1 1 3 0m0 3.5v-4a1.5 1.5 0 1 1 3 0m0 1.5v-2a1.5 1.5 0 1 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-5"></path></svg>
                         Ayuda LSM
@@ -570,7 +534,6 @@
                         <h3>Próxima Clase</h3>
                         <p style="font-size: 1.1rem; margin-top: 1rem; font-weight: bold;">Boxeo</p>
                         <p style="font-size: 0.9rem; color: #888;">Hoy a las 18:00 hrs - Salón B</p>
-                        <!-- BOTÓN FUNCIONAL -->
                         <button class="btn" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;" onclick="abrirHorarios()">Ver Horarios</button>
                     </div>
                 </div>
@@ -583,6 +546,7 @@
                         <h1>Mis Rutinas</h1>
                         <p style="color: #888;">Plan de entrenamiento personalizado</p>
                     </div>
+                    <!-- Botón LSM Funcional -->
                     <button class="lsm-help-btn" onclick="openLSM()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 1 1 3 0m-3 6a1.5 1.5 0 0 1-3 0v-5a1.5 1.5 0 1 1 3 0m0 3.5v-4a1.5 1.5 0 1 1 3 0m0 1.5v-2a1.5 1.5 0 1 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-5"></path></svg>
                         Ayuda LSM
@@ -634,6 +598,18 @@
         <div class="acc-group">
             <label>Contraste</label>
             <div class="acc-options"><button class="acc-btn" id="contrastBtnApp" onclick="toggleContrast(this)">Activar Alto Contraste</button></div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CERRAR SESIÓN (PERSONALIZADO) -->
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">Cerrar Sesión</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text);">¿Estás seguro que deseas salir de tu cuenta?</p>
+            <div class="modal-actions">
+                <button class="btn" onclick="cerrarModalLogout()" style="background: #555; flex: 1;">Cancelar</button>
+                <button class="btn" onclick="ejecutarCerrarSesion()" style="background: var(--error); flex: 1;">Sí, salir</button>
+            </div>
         </div>
     </div>
 
@@ -737,15 +713,24 @@
             }
         }
 
-        // CERRAR SESIÓN CON CONFIRMACIÓN
-        function cerrarSesion() {
-            if (confirm("¿Estás seguro que deseas cerrar sesión?")) {
-                appDashboard.style.display = 'none';
-                publicSite.style.display = 'block';
-                switchView('inicio', document.querySelector('.app-nav li'));
-                document.getElementById('profilePopover').classList.remove('active');
-                appSidebar.classList.remove('open');
-            }
+        // --- CERRAR SESIÓN CON MODAL PERSONALIZADO ---
+        const logoutModal = document.getElementById('logoutModal');
+
+        function confirmarCerrarSesion() {
+            logoutModal.classList.add('active');
+        }
+
+        function cerrarModalLogout() {
+            logoutModal.classList.remove('active');
+        }
+
+        function ejecutarCerrarSesion() {
+            cerrarModalLogout();
+            appDashboard.style.display = 'none';
+            publicSite.style.display = 'block';
+            switchView('inicio', document.querySelector('.app-nav li'));
+            document.getElementById('profilePopover').classList.remove('active');
+            appSidebar.classList.remove('open');
         }
 
         // MENÚ HAMBURGUESA
@@ -760,7 +745,6 @@
             document.querySelectorAll('.app-nav li').forEach(li => li.classList.remove('active'));
             if(navElement) navElement.classList.add('active');
             
-            // Cerrar menú al cambiar de vista
             appSidebar.classList.remove('open');
         }
 
@@ -775,19 +759,28 @@
             }
         });
 
-        // MODAL HORARIOS (NUEVO)
+        // MODAL HORARIOS
         const horariosModal = document.getElementById('horariosModal');
         function abrirHorarios() { horariosModal.classList.add('active'); }
         function cerrarHorarios() { horariosModal.classList.remove('active'); }
 
-        // MODAL LSM
+        // --- MODAL LSM (AHORA SÍ FUNCIONAL) ---
         const lsmModal = document.getElementById('lsmModal');
-        function openLSM() { lsmModal.classList.add('active'); }
-        function closeLSM() { lsmModal.classList.remove('active'); }
+        const lsmVideo = document.getElementById('lsmVideo');
+        
+        function openLSM() { 
+            lsmModal.classList.add('active'); 
+        }
+        function closeLSM() { 
+            lsmModal.classList.remove('active');
+            // Detener video al cerrar
+            const iframeSrc = lsmVideo.src;
+            lsmVideo.src = iframeSrc; 
+        }
 
         // FORMULARIO (Mantén tu código de validación aquí)
         const form = document.getElementById('inscripcionForm');
-        // ... (Copia aquí tu función del formulario que ya tenías)
+        // ...
     </script>
 </body>
 </html>
