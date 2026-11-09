@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kronox Gym - Transforma tu Cuerpo</title>
     <style>
-        /* PALETA DE COLORES GIMNASIO (Rojo Neón y Gris Profundo) */
+        /* PALETA DE COLORES GIMNASIO */
         :root {
             --primary: #E60000; 
             --primary-dark: #B30000;
             --accent: #FF3333; 
-            --bg: #0a0a0a; /* Fondo casi negro */
-            --bg-gradient: radial-gradient(circle at top right, #2a0000 0%, #0a0a0a 50%); /* Degradado sutil */
+            --bg: #0a0a0a; 
+            --bg-gradient: radial-gradient(circle at top right, #2a0000 0%, #0a0a0a 50%); 
             --text: #f0f0f0;
             --card-bg: #161616; 
             --border: #2a2a2a;
@@ -22,7 +22,6 @@
             --font-base: 16px;
         }
 
-        /* Modo Claro */
         [data-theme="light"] {
             --bg: #f4f4f4;
             --bg-gradient: radial-gradient(circle at top right, #ffe6e6 0%, #f4f4f4 50%);
@@ -32,12 +31,10 @@
             --shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Filtros de Daltonismo */
         html[data-filter="protanopia"] { filter: url('#protanopia'); }
         html[data-filter="deuteranopia"] { filter: url('#deuteranopia'); }
         html[data-filter="tritanopia"] { filter: url('#tritanopia'); }
 
-        /* Alto Contraste */
         html[data-contrast="high"] {
             --bg: #000000;
             --bg-gradient: #000000;
@@ -63,7 +60,6 @@
             min-height: 100vh;
         }
 
-        /* NAVEGACIÓN */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 1rem 2rem; background: rgba(22, 22, 22, 0.8); backdrop-filter: blur(10px);
@@ -83,7 +79,6 @@
         }
         .btn-login:hover { background: var(--primary-dark); }
 
-        /* CONTROLES FLOTANTES */
         .floating-controls {
             position: fixed; top: 90px; right: 20px;
             display: flex; flex-direction: column; gap: 15px;
@@ -100,7 +95,6 @@
         .icon-btn:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.1); }
         .icon-btn svg { width: 24px; height: 24px; }
 
-        /* PANEL DE ACCESIBILIDAD */
         .accessibility-panel {
             display: none; position: fixed; top: 90px; right: 80px; 
             background: var(--card-bg); padding: 1.5rem; border-radius: var(--radius);
@@ -115,7 +109,6 @@
         .acc-btn { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.4rem 0.8rem; border-radius: var(--radius); cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
         .acc-btn:hover, .acc-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* LANDING PAGE */
         .hero { text-align: center; padding: 6rem 2rem; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover; color: white; }
         .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 4px; text-shadow: 2px 2px 15px rgba(230,0,0,0.6); }
         .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; }
@@ -150,7 +143,6 @@
         .success-msg.show { display: block; }
         footer { text-align: center; padding: 2rem; background: var(--card-bg); border-top: 3px solid var(--primary); margin-top: 3rem; }
 
-        /* MODALES GENERALES */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 300; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal.active { display: flex; }
         .modal-content { background: var(--card-bg); padding: 2rem; border-radius: var(--radius); width: 90%; max-width: 700px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); }
@@ -158,9 +150,6 @@
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 1rem; border-radius: var(--radius); }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /* =========================================
-           INTERFAZ DEL PORTAL (APP)
-           ========================================= */
         #appDashboard {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-gradient); z-index: 400; overflow-y: auto;
@@ -230,13 +219,8 @@
         .routine-list li:last-child { border-bottom: none; }
         .routine-badge { background: var(--primary); color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; }
 
-        /* MODAL DE CERRAR SESIÓN PERSONALIZADO */
-        #logoutModal .modal-content {
-            max-width: 400px;
-        }
-        #logoutModal .modal-actions {
-            display: flex; gap: 10px; margin-top: 1.5rem;
-        }
+        #logoutModal .modal-content { max-width: 400px; }
+        #logoutModal .modal-actions { display: flex; gap: 10px; margin-top: 1.5rem; }
 
         @media (max-width: 768px) {
             .app-content { padding: 1rem; }
@@ -247,9 +231,7 @@
 </head>
 <body>
 
-    <!-- ========================================== -->
     <!-- 1. VISTA PÚBLICA (Landing Page) -->
-    <!-- ========================================== -->
     <div id="publicSite">
         <svg style="display: none;">
             <filter id="protanopia"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter>
@@ -269,13 +251,13 @@
 
         <div class="floating-controls">
             <button class="icon-btn" id="ttsToggle" title="Lectura en Voz Alta">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
             </button>
             <button class="icon-btn" id="themeToggle" title="Cambiar Tema">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>
             <button class="icon-btn" id="accToggle" title="Opciones de Accesibilidad">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="6" r="2"></circle><path d="M12 10v6"></path><path d="M8 10h8"></path><path d="M9 20l3-4 3 4"></path></svg>
             </button>
         </div>
 
@@ -335,7 +317,8 @@
         </section>
 
         <section class="section" id="inscripcion">
-            <h2 class="section-title">Inscripción (Nuevos Usuarios)</h2>
+            <!-- MODIFICACIÓN 1: Quitar "(Nuevos Usuarios)" -->
+            <h2 class="section-title">Inscripción</h2>
             <div class="form-container">
                 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
                 <form id="inscripcionForm">
@@ -371,6 +354,7 @@
                             <span id="btnText">Enviar Inscripción</span>
                         </button>
                     </div>
+                    <!-- MODIFICACIÓN 3: Mensaje de éxito listo para mostrarse -->
                     <div class="success-msg" id="successMsg">
                         <span id="successText">✔ ¡Inscripción exitosa!</span>
                     </div>
@@ -401,7 +385,7 @@
                     </div>
                     <button type="submit" class="btn-submit">Entrar a mi cuenta</button>
                 </form>
-                <p style="margin-top: 1rem; font-size: 0.8rem; color: #888;">(Simulación: Cualquier correo funcionará)</p>
+                <!-- MODIFICACIÓN 2: Se quitó la leyenda de simulación -->
             </div>
         </div>
 
@@ -435,7 +419,7 @@
             </div>
         </div>
 
-        <!-- MODAL LSM GENERAL -->
+        <!-- MODAL LSM -->
         <div class="modal" id="lsmModal">
             <div class="modal-content">
                 <button class="close-modal" onclick="closeLSM()">✕</button>
@@ -447,12 +431,12 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
     <!-- 2. VISTA PRIVADA (Portal de Miembro) -->
-    <!-- ========================================== -->
     <div id="appDashboard">
         
-        <!-- Barra Lateral (Menú estilo WhatsApp) -->
+        <!-- MODIFICACIÓN 4: Se agregó un "overlay" para detectar clic fuera del menú -->
+        <div id="sidebarOverlay" onclick="toggleSidebar()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:490;"></div>
+
         <aside class="app-sidebar" id="appSidebar">
             <div class="logo">Kronox App</div>
             <ul class="app-nav">
@@ -462,13 +446,11 @@
             </ul>
         </aside>
 
-        <!-- Contenido Dinámico -->
         <main class="app-content">
             
-            <!-- Header Superior -->
             <div class="app-top-header">
                 <button class="menu-btn" onclick="toggleSidebar()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
 
                 <div class="header-right">
@@ -487,7 +469,6 @@
                 </div>
             </div>
 
-            <!-- Ventanita flotante de Perfil -->
             <div class="profile-popover" id="profilePopover">
                 <div class="avatar">D</div>
                 <h3>Dulce María</h3>
@@ -500,14 +481,12 @@
                 <button class="btn" style="width: 100%; font-size: 0.8rem;" onclick="alert('Simulación: Renovación de membresía')">Renovar Membresía</button>
             </div>
 
-            <!-- VISTA 1: INICIO -->
             <div id="view-inicio" class="app-view active">
                 <div class="app-header">
                     <div>
                         <h1>¡Hola, Dulce María!</h1>
                         <p style="color: #888;">Plan Premium activo</p>
                     </div>
-                    <!-- Botón LSM Funcional -->
                     <button class="lsm-help-btn" onclick="openLSM()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 1 1 3 0m-3 6a1.5 1.5 0 0 1-3 0v-5a1.5 1.5 0 1 1 3 0m0 3.5v-4a1.5 1.5 0 1 1 3 0m0 1.5v-2a1.5 1.5 0 1 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-5"></path></svg>
                         Ayuda LSM
@@ -534,19 +513,18 @@
                         <h3>Próxima Clase</h3>
                         <p style="font-size: 1.1rem; margin-top: 1rem; font-weight: bold;">Boxeo</p>
                         <p style="font-size: 0.9rem; color: #888;">Hoy a las 18:00 hrs - Salón B</p>
+                        <!-- MODIFICACIÓN 5: Se asegura que el botón abra el modal -->
                         <button class="btn" style="margin-top: 1rem; padding: 0.5rem; font-size: 0.8rem;" onclick="abrirHorarios()">Ver Horarios</button>
                     </div>
                 </div>
             </div>
 
-            <!-- VISTA 2: RUTINAS -->
             <div id="view-rutinas" class="app-view">
                 <div class="app-header">
                     <div>
                         <h1>Mis Rutinas</h1>
                         <p style="color: #888;">Plan de entrenamiento personalizado</p>
                     </div>
-                    <!-- Botón LSM Funcional -->
                     <button class="lsm-help-btn" onclick="openLSM()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 1 1 3 0m-3 6a1.5 1.5 0 0 1-3 0v-5a1.5 1.5 0 1 1 3 0m0 3.5v-4a1.5 1.5 0 1 1 3 0m0 1.5v-2a1.5 1.5 0 1 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-5"></path></svg>
                         Ayuda LSM
@@ -575,7 +553,7 @@
         </main>
     </div>
 
-    <!-- PANEL DE ACCESIBILIDAD FLOTANTE (Para App) -->
+    <!-- PANEL DE ACCESIBILIDAD FLOTANTE (App) -->
     <div class="accessibility-panel" id="accPanelApp" style="z-index: 700;">
         <h3>Accesibilidad Universal</h3>
         <div class="acc-group">
@@ -601,7 +579,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CERRAR SESIÓN (PERSONALIZADO) -->
+    <!-- MODAL DE CERRAR SESIÓN -->
     <div class="modal" id="logoutModal">
         <div class="modal-content">
             <h2 style="color: var(--primary); margin-bottom: 1rem;">Cerrar Sesión</h2>
@@ -616,7 +594,7 @@
     <script>
         const html = document.documentElement;
 
-        // 1. ACCESIBILIDAD (Global)
+        // 1. ACCESIBILIDAD
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleApp = document.getElementById('themeToggleApp');
         
@@ -699,6 +677,7 @@
         const publicSite = document.getElementById('publicSite');
         const appDashboard = document.getElementById('appDashboard');
         const appSidebar = document.getElementById('appSidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
 
         function abrirLogin() { loginModal.classList.add('active'); }
         function cerrarLogin() { loginModal.classList.remove('active'); }
@@ -713,17 +692,10 @@
             }
         }
 
-        // --- CERRAR SESIÓN CON MODAL PERSONALIZADO ---
+        // CERRAR SESIÓN
         const logoutModal = document.getElementById('logoutModal');
-
-        function confirmarCerrarSesion() {
-            logoutModal.classList.add('active');
-        }
-
-        function cerrarModalLogout() {
-            logoutModal.classList.remove('active');
-        }
-
+        function confirmarCerrarSesion() { logoutModal.classList.add('active'); }
+        function cerrarModalLogout() { logoutModal.classList.remove('active'); }
         function ejecutarCerrarSesion() {
             cerrarModalLogout();
             appDashboard.style.display = 'none';
@@ -731,11 +703,17 @@
             switchView('inicio', document.querySelector('.app-nav li'));
             document.getElementById('profilePopover').classList.remove('active');
             appSidebar.classList.remove('open');
+            sidebarOverlay.style.display = 'none'; // Ocultar overlay
         }
 
-        // MENÚ HAMBURGUESA
+        // MODIFICACIÓN 4: Lógica del Menú y Overlay
         function toggleSidebar() {
             appSidebar.classList.toggle('open');
+            if (appSidebar.classList.contains('open')) {
+                sidebarOverlay.style.display = 'block'; // Mostrar overlay
+            } else {
+                sidebarOverlay.style.display = 'none'; // Ocultar overlay
+            }
         }
 
         function switchView(viewName, navElement) {
@@ -745,42 +723,116 @@
             document.querySelectorAll('.app-nav li').forEach(li => li.classList.remove('active'));
             if(navElement) navElement.classList.add('active');
             
+            // Cerrar menú y overlay
             appSidebar.classList.remove('open');
+            sidebarOverlay.style.display = 'none';
         }
 
         // POPOVER DE PERFIL
         const profilePopover = document.getElementById('profilePopover');
-        function toggleProfilePopover() {
-            profilePopover.classList.toggle('active');
-        }
+        function toggleProfilePopover() { profilePopover.classList.toggle('active'); }
         document.addEventListener('click', (e) => {
             if (!profilePopover.contains(e.target) && !e.target.closest('.profile-btn')) {
                 profilePopover.classList.remove('active');
             }
         });
 
-        // MODAL HORARIOS
+        // MODIFICACIÓN 5: Funcionalidad de Horarios
         const horariosModal = document.getElementById('horariosModal');
         function abrirHorarios() { horariosModal.classList.add('active'); }
         function cerrarHorarios() { horariosModal.classList.remove('active'); }
 
-        // --- MODAL LSM (AHORA SÍ FUNCIONAL) ---
+        // MODAL LSM
         const lsmModal = document.getElementById('lsmModal');
         const lsmVideo = document.getElementById('lsmVideo');
-        
-        function openLSM() { 
-            lsmModal.classList.add('active'); 
-        }
+        function openLSM() { lsmModal.classList.add('active'); }
         function closeLSM() { 
             lsmModal.classList.remove('active');
-            // Detener video al cerrar
             const iframeSrc = lsmVideo.src;
             lsmVideo.src = iframeSrc; 
         }
 
-        // FORMULARIO (Mantén tu código de validación aquí)
+        // MODIFICACIÓN 3: Lógica del Formulario
         const form = document.getElementById('inscripcionForm');
-        // ...
+        const nombre = document.getElementById('nombre');
+        const email = document.getElementById('email');
+        const telefono = document.getElementById('telefono');
+        const plan = document.getElementById('plan');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const successMsg = document.getElementById('successMsg');
+        const successText = document.getElementById('successText');
+        const progressFill = document.getElementById('progressFill');
+
+        function updateProgress() {
+            let filled = 0;
+            if (nombre.value.trim() !== '') filled++;
+            if (email.value.trim() !== '') filled++;
+            if (telefono.value.trim() !== '') filled++;
+            if (plan.value !== '') filled++;
+            progressFill.style.width = (filled / 4 * 100) + '%';
+        }
+
+        [nombre, email, telefono, plan].forEach(el => {
+            el.addEventListener('input', updateProgress);
+            el.addEventListener('change', updateProgress);
+        });
+
+        function validateField(input, errorId, condition) {
+            const errorEl = document.getElementById(errorId);
+            if (condition) { input.classList.remove('error'); errorEl.classList.remove('show'); return true; } 
+            else { input.classList.add('error'); errorEl.classList.add('show'); return false; }
+        }
+
+        nombre.addEventListener('blur', () => validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3));
+        email.addEventListener('blur', () => { const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; validateField(email, 'error-email', re.test(email.value)); });
+        telefono.addEventListener('blur', () => validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, ''))));
+        plan.addEventListener('change', () => validateField(plan, 'error-plan', plan.value !== ''));
+
+        function limpiarFormulario() {
+            if(confirm("¿Estás seguro de cancelar la inscripción?")) {
+                form.reset(); progressFill.style.width = '0%';
+                document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
+                successMsg.classList.remove('show');
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const isNombreValid = validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
+            const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isEmailValid = validateField(email, 'error-email', reEmail.test(email.value));
+            const isTelefonoValid = validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
+            const isPlanValid = validateField(plan, 'error-plan', plan.value !== '');
+
+            if (!isNombreValid || !isEmailValid || !isTelefonoValid || !isPlanValid) return;
+
+            submitBtn.disabled = true; spinner.style.display = 'inline-block'; btnText.textContent = 'Guardando...';
+            successMsg.classList.remove('show');
+
+            try {
+                const response = await fetch('/api/inscribir', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre: nombre.value, email: email.value, telefono: telefono.value, plan: plan.value })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    spinner.style.display = 'none'; btnText.textContent = 'Enviar Inscripción'; submitBtn.disabled = false;
+                    successText.textContent = '✔ ' + data.mensaje;
+                    successMsg.style.backgroundColor = 'var(--success)'; successMsg.classList.add('show');
+                    form.reset(); progressFill.style.width = '0%';
+                    setTimeout(() => successMsg.classList.remove('show'), 8000);
+                } else {
+                    throw new Error(data.error || 'Error en el servidor');
+                }
+            } catch (error) {
+                spinner.style.display = 'none'; btnText.textContent = 'Enviar Inscripción'; submitBtn.disabled = false;
+                successText.textContent = '❌ ' + error.message;
+                successMsg.style.backgroundColor = 'var(--error)'; successMsg.classList.add('show');
+            }
+        });
     </script>
 </body>
 </html>
