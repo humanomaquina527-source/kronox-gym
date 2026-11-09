@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kronox Gym - Transforma tu Cuerpo</title>
     <style>
-        /* ============================================
-           PALETA DE COLORES GIMNASIO (Rojo Profundo y Acero)
-           ============================================ */
+        /* PALETA DE COLORES GIMNASIO */
         :root {
-            --primary: #8B0000; /* Rojo Carmesí oscuro */
+            --primary: #8B0000; 
             --primary-dark: #5c0000;
             --accent: #B22222; 
             --bg: #f4f4f4;
@@ -23,7 +21,6 @@
             --font-base: 16px;
         }
 
-        /* Modo oscuro */
         [data-theme="dark"] {
             --bg: #121212;
             --text: #e0e0e0;
@@ -32,18 +29,16 @@
             --shadow: 0 4px 10px rgba(0,0,0,0.6);
         }
 
-        /* Filtros de Daltonismo */
         html[data-filter="protanopia"] { filter: url('#protanopia'); }
         html[data-filter="deuteranopia"] { filter: url('#deuteranopia'); }
         html[data-filter="tritanopia"] { filter: url('#tritanopia'); }
 
-        /* Modo Alto Contraste (Arreglado) */
         html[data-contrast="high"] {
             --bg: #000000;
             --text: #ffffff;
             --card-bg: #111111;
             --border: #ffffff;
-            --primary: #ffcc00; /* Amarillo mostaza */
+            --primary: #ffcc00; 
             --primary-dark: #ffcc00;
             --accent: #ffcc00;
             --success: #00ff00; 
@@ -73,9 +68,6 @@
             line-height: 1.6;
         }
 
-        /* ============================================
-           NAVEGACIÓN
-           ============================================ */
         nav {
             display: flex;
             justify-content: space-between;
@@ -112,17 +104,9 @@
             font-size: 0.9rem;
         }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+        .nav-links a:hover { color: var(--primary); }
 
-        /* ============================================
-           BOTONES DE UTILIDAD
-           ============================================ */
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
+        .nav-buttons { display: flex; gap: 10px; }
 
         .icon-btn {
             background: none;
@@ -143,7 +127,7 @@
             color: var(--primary);
         }
 
-        /* Panel de Accesibilidad Flotante */
+        /* PANEL DE ACCESIBILIDAD */
         .accessibility-panel {
             display: none;
             position: fixed;
@@ -155,12 +139,12 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             z-index: 200;
-            width: 300px;
+            width: 320px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
-        .accessibility-panel.active {
-            display: block;
-        }
+        .accessibility-panel.active { display: block; }
 
         .accessibility-panel h3 {
             margin-bottom: 1rem;
@@ -170,22 +154,14 @@
             padding-bottom: 5px;
         }
 
-        .acc-group {
-            margin-bottom: 1rem;
-        }
-
+        .acc-group { margin-bottom: 1rem; }
         .acc-group label {
             display: block;
             font-size: 0.85rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
-
-        .acc-options {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
+        .acc-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
         .acc-btn {
             background: var(--bg);
@@ -204,30 +180,14 @@
             border-color: var(--primary);
         }
 
-        /* ============================================
-           HERO SECTION
-           ============================================ */
         .hero {
             text-align: center;
             padding: 5rem 2rem;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover;
             color: white;
         }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-weight: 500;
-        }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 3px; }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; }
 
         .btn {
             display: inline-block;
@@ -243,36 +203,11 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+        .btn:hover { transform: translateY(-2px); background: var(--primary-dark); }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            background: var(--primary-dark);
-        }
-
-        /* ============================================
-           SECCIÓN DE PLANES
-           ============================================ */
-        .section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
+        .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -283,43 +218,13 @@
             transition: transform 0.2s;
             border-top: 4px solid var(--primary);
         }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; }
+        .price { font-size: 2.5rem; font-weight: 900; margin: 1rem 0; }
+        .card ul { list-style: none; margin: 1.5rem 0; text-align: left; }
+        .card ul li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+        .card ul li::before { content: "✓ "; color: var(--primary); font-weight: bold; }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .price {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin: 1rem 0;
-        }
-
-        .card ul {
-            list-style: none;
-            margin: 1.5rem 0;
-            text-align: left;
-        }
-
-        .card ul li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .card ul li::before {
-            content: "✓ ";
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        /* ============================================
-           FORMULARIO
-           ============================================ */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
@@ -329,20 +234,9 @@
             box-shadow: var(--shadow);
             border-top: 4px solid var(--primary);
         }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group select {
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; font-size: 0.9rem; }
+        .form-group input, .form-group select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid var(--border);
@@ -352,52 +246,22 @@
             font-size: 1rem;
             transition: border-color 0.2s;
         }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .error-msg {
-            color: var(--error);
-            font-size: 0.85rem;
-            margin-top: 0.3rem;
-            display: none;
-            font-weight: bold;
-        }
-
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); }
+        .error-msg { color: var(--error); font-size: 0.85rem; margin-top: 0.3rem; display: none; font-weight: bold; }
         .error-msg.show { display: block; }
         .form-group input.error { border-color: var(--error); }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--border);
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
+        .progress-bar { width: 100%; height: 6px; background: var(--border); margin-bottom: 1.5rem; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.3s; }
         .spinner {
             display: none;
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 3px solid rgba(255,255,255,0.3);
             border-top-color: white;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-right: 0.5rem;
         }
-
         @keyframes spin { to { transform: rotate(360deg); } }
-
         .btn-submit {
             width: 100%;
             padding: 1rem;
@@ -415,10 +279,8 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .btn-submit:hover { background: var(--primary-dark); }
         .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
-
         .success-msg {
             display: none;
             background: var(--success);
@@ -429,18 +291,51 @@
             text-align: center;
             font-weight: bold;
         }
-
         .success-msg.show { display: block; }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
+        footer { text-align: center; padding: 2rem; background: var(--card-bg); border-top: 3px solid var(--primary); margin-top: 3rem; }
+
+        /* MODAL DE LENGUA DE SEÑAS */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
             background: var(--card-bg);
-            border-top: 3px solid var(--primary);
-            margin-top: 3rem;
+            padding: 2rem;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            background: none; border: none;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin-top: 1rem;
+            border-radius: var(--radius);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 1rem; padding: 1rem; }
             .nav-links { flex-wrap: wrap; justify-content: center; }
@@ -451,14 +346,12 @@
 </head>
 <body>
 
-    <!-- Filtros SVG para Daltonismo (Ocultos) -->
     <svg style="display: none;">
         <filter id="protanopia"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter>
         <filter id="deuteranopia"><feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/></filter>
         <filter id="tritanopia"><feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/></filter>
     </svg>
 
-    <!-- NAVEGACIÓN -->
     <nav>
         <div class="logo">Kronox Gym</div>
         <ul class="nav-links">
@@ -468,14 +361,22 @@
             <li><a href="#contacto">Contacto</a></li>
         </ul>
         <div class="nav-buttons">
+            <button class="icon-btn" id="ttsToggle" title="Lectura en Voz Alta">🔊</button>
             <button class="icon-btn" id="themeToggle" title="Cambiar Tema">🌙</button>
-            <button class="icon-btn" id="accToggle" title="Opciones de Accesibilidad">♿</button>
+            <!-- NUEVO ICONO UNIVERSAL -->
+            <button class="icon-btn" id="accToggle" title="Opciones de Accesibilidad">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="4" r="2"></circle>
+                    <path d="M19 13v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <path d="M5 13l-2 6h18l-2-6"></path>
+                    <path d="M12 13v8"></path>
+                </svg>
+            </button>
         </div>
     </nav>
 
-    <!-- PANEL DE ACCESIBILIDAD -->
     <div class="accessibility-panel" id="accPanel">
-        <h3>Accesibilidad Visual</h3>
+        <h3>Accesibilidad Universal</h3>
         
         <div class="acc-group">
             <label>Tamaño de letra</label>
@@ -502,16 +403,34 @@
                 <button class="acc-btn" id="contrastBtn" onclick="toggleContrast(this)">Activar Alto Contraste</button>
             </div>
         </div>
+
+        <div class="acc-group">
+            <label>Accesibilidad Sensorial</label>
+            <div class="acc-options">
+                <button class="acc-btn" onclick="openLSM()" style="background: var(--primary); color: white;">🤟 Tutorial en Lengua de Señas</button>
+            </div>
+        </div>
     </div>
 
-    <!-- HERO -->
+    <!-- MODAL LSM -->
+    <div class="modal" id="lsmModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeLSM()">✕</button>
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">Tutorial en Lengua de Señas</h3>
+            <p style="margin-bottom: 1rem;">Video demostrativo de LSM (Espacio reservado para el video oficial del gimnasio).</p>
+            <div class="video-container">
+                <!-- VIDEO DEMO DE LSM -->
+                <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <section class="hero" id="inicio">
         <h1>Transforma tu Cuerpo</h1>
         <p>Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento.</p>
         <a href="#inscripcion" class="btn">¡Inscríbete Ahora!</a>
     </section>
 
-    <!-- PLANES -->
     <section class="section" id="planes">
         <h2 class="section-title">Nuestros Planes</h2>
         <div class="cards">
@@ -550,7 +469,6 @@
         </div>
     </section>
 
-    <!-- FORMULARIO -->
     <section class="section" id="inscripcion">
         <h2 class="section-title">Inscripción</h2>
         <div class="form-container">
@@ -601,17 +519,14 @@
     </footer>
 
     <script>
-        // ============================================
-        // 1. LÓGICA DEL MODO OSCURO/CLARO
-        // ============================================
-        const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
 
+        // 1. MODO OSCURO
+        const themeToggle = document.getElementById('themeToggle');
         if (localStorage.getItem('theme') === 'dark') {
             html.setAttribute('data-theme', 'dark');
             themeToggle.textContent = '☀️';
         }
-
         themeToggle.addEventListener('click', () => {
             if (html.getAttribute('data-theme') === 'dark') {
                 html.removeAttribute('data-theme');
@@ -624,16 +539,10 @@
             }
         });
 
-        // ============================================
-        // 2. LÓGICA DEL PANEL DE ACCESIBILIDAD
-        // ============================================
+        // 2. PANEL ACCESIBILIDAD
         const accToggle = document.getElementById('accToggle');
         const accPanel = document.getElementById('accPanel');
-
-        accToggle.addEventListener('click', () => {
-            accPanel.classList.toggle('active');
-        });
-
+        accToggle.addEventListener('click', () => accPanel.classList.toggle('active'));
         document.addEventListener('click', (e) => {
             if (!accPanel.contains(e.target) && e.target !== accToggle && !accToggle.contains(e.target)) {
                 accPanel.classList.remove('active');
@@ -645,9 +554,7 @@
             if (action === 'reset') currentFontSize = 16;
             else if (action === '+2px') currentFontSize += 2;
             else if (action === '-2px' && currentFontSize > 10) currentFontSize -= 2;
-            
-            document.documentElement.style.setProperty('--font-base', currentFontSize + 'px');
-            
+            html.style.setProperty('--font-base', currentFontSize + 'px');
             document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn').forEach(btn => btn.classList.remove('active'));
             if (action === 'reset') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[1].classList.add('active');
             if (action === '+2px') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[2].classList.add('active');
@@ -657,17 +564,13 @@
         function setFilter(type, btn) {
             if (type === 'none') html.removeAttribute('data-filter');
             else html.setAttribute('data-filter', type);
-            
             document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
-            // Si se activa un filtro, apagar el alto contraste para que no choquen
             if (type !== 'none' && html.getAttribute('data-contrast') === 'high') {
                 toggleContrast(document.getElementById('contrastBtn'));
             }
         }
 
-        // LÓGICA DEL ALTO CONTRASTE CORREGIDA
         function toggleContrast(btn) {
             if (html.getAttribute('data-contrast') === 'high') {
                 html.removeAttribute('data-contrast');
@@ -677,17 +580,40 @@
                 html.setAttribute('data-contrast', 'high');
                 btn.classList.add('active');
                 btn.textContent = 'Desactivar Alto Contraste';
-                
-                // APAGAR FILTROS DE DALTONISMO AL ACTIVAR CONTRASTE
                 html.removeAttribute('data-filter');
                 document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn')[0].classList.add('active');
             }
         }
 
-        // ============================================
-        // 3. LÓGICA DEL FORMULARIO
-        // ============================================
+        // 3. LECTURA EN VOZ ALTA (TTS)
+        let isSpeaking = false;
+        const ttsToggle = document.getElementById('ttsToggle');
+        ttsToggle.addEventListener('click', () => {
+            if (isSpeaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                ttsToggle.textContent = '🔊';
+            } else {
+                const text = "Bienvenido a Kronox Gym. Transforma tu cuerpo. Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento. Contamos con planes básico, premium y elite. Por favor, dirígete a la sección de inscripción para llenar el formulario.";
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'es-MX';
+                utterance.onend = () => {
+                    isSpeaking = false;
+                    ttsToggle.textContent = '🔊';
+                };
+                window.speechSynthesis.speak(utterance);
+                isSpeaking = true;
+                ttsToggle.textContent = '⏹️';
+            }
+        });
+
+        // 4. MODAL LSM
+        const lsmModal = document.getElementById('lsmModal');
+        function openLSM() { lsmModal.classList.add('active'); }
+        function closeLSM() { lsmModal.classList.remove('active'); }
+
+        // 5. FORMULARIO
         const form = document.getElementById('inscripcionForm');
         const nombre = document.getElementById('nombre');
         const email = document.getElementById('email');
@@ -736,7 +662,6 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const isNombreValid = validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
             const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isEmailValid = validateField(email, 'error-email', reEmail.test(email.value));
