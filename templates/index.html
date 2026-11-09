@@ -107,15 +107,13 @@
 
         .nav-links a:hover { color: var(--primary); }
 
-        /* ============================================
-           CONTROLES FLOTANTES (ADAPTABLES)
-           ============================================ */
+        /* CONTROLES FLOTANTES (ADAPTABLES) */
         .floating-controls {
             position: fixed;
-            top: 90px; /* Por defecto en PC: arriba a la derecha */
+            top: 90px; 
             right: 20px;
             display: flex;
-            flex-direction: column; /* En columna */
+            flex-direction: column; 
             gap: 10px;
             z-index: 150;
             transition: all 0.3s;
@@ -126,7 +124,7 @@
             border: 2px solid var(--border);
             color: var(--text);
             padding: 0.5rem;
-            border-radius: 50%; /* Botones redondos */
+            border-radius: 50%; 
             cursor: pointer;
             font-size: 1.2rem;
             transition: all 0.2s;
@@ -149,7 +147,7 @@
             display: none;
             position: fixed;
             top: 90px;
-            right: 80px; /* Al lado de los botones flotantes */
+            right: 80px; 
             background: var(--card-bg);
             padding: 1.5rem;
             border-radius: var(--radius);
@@ -354,23 +352,19 @@
             top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* ============================================
-           DISEÑO RESPONSIVO (MÓVIL)
-           ============================================ */
+        /* DISEÑO RESPONSIVO (MÓVIL) */
         @media (max-width: 768px) {
             nav { flex-direction: column; gap: 1rem; padding: 1rem; }
             .nav-links { flex-wrap: wrap; justify-content: center; }
             .hero h1 { font-size: 2rem; }
             
-            /* AQUÍ CAMBIAMOS LOS BOTONES A LA PARTE INFERIOR EN MÓVIL */
             .floating-controls {
                 top: auto;
                 bottom: 20px; 
                 right: 20px;
-                flex-direction: row; /* En fila para que no estorben arriba */
+                flex-direction: row; 
             }
 
-            /* El panel de accesibilidad se adapta a móvil */
             .accessibility-panel { 
                 top: auto;
                 bottom: 80px; 
@@ -389,7 +383,6 @@
         <filter id="tritanopia"><feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/></filter>
     </svg>
 
-    <!-- NAVEGACIÓN (Solo enlaces, sin botones de accesibilidad) -->
     <nav>
         <div class="logo">Kronox Gym</div>
         <ul class="nav-links">
@@ -400,7 +393,6 @@
         </ul>
     </nav>
 
-    <!-- CONTROLES FLOTANTES -->
     <div class="floating-controls">
         <button class="icon-btn" id="ttsToggle" title="Lectura en Voz Alta">🔊</button>
         <button class="icon-btn" id="themeToggle" title="Cambiar Tema">🌙</button>
@@ -415,7 +407,6 @@
         </button>
     </div>
 
-    <!-- PANEL DE ACCESIBILIDAD -->
     <div class="accessibility-panel" id="accPanel">
         <h3>Accesibilidad Universal</h3>
         
@@ -453,7 +444,6 @@
         </div>
     </div>
 
-    <!-- MODAL LSM -->
     <div class="modal" id="lsmModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeLSM()">✕</button>
@@ -535,16 +525,21 @@
                     <label for="plan">Selecciona tu plan *</label>
                     <select id="plan" required>
                         <option value="">-- Elige un plan --</option>
-                        <option value="basico">Básico - $299/mes</option>
-                        <option value="premium">Premium - $499/mes</option>
-                        <option value="elite">Élite - $799/mes</option>
+                        <option value="Básico">Básico - $299/mes</option>
+                        <option value="Premium">Premium - $499/mes</option>
+                        <option value="Élite">Élite - $799/mes</option>
                     </select>
                     <span class="error-msg" id="error-plan">Selecciona un plan.</span>
                 </div>
-                <button type="submit" class="btn-submit" id="submitBtn">
-                    <span class="spinner" id="spinner"></span>
-                    <span id="btnText">Enviar Inscripción</span>
-                </button>
+                
+                <div style="display: flex; gap: 10px; margin-top: 1rem;">
+                    <button type="button" class="btn" onclick="limpiarFormulario()" style="background: #555; flex: 1;">Cancelar</button>
+                    <button type="submit" class="btn-submit" id="submitBtn" style="flex: 2;">
+                        <span class="spinner" id="spinner"></span>
+                        <span id="btnText">Enviar Inscripción</span>
+                    </button>
+                </div>
+                
                 <div class="success-msg" id="successMsg">
                     ✅ ¡Inscripción exitosa! Te contactaremos pronto.
                 </div>
@@ -672,103 +667,7 @@
             if (e.target === lsmModal) closeLSM();
         });
 
-        // 5. FORMULARIO
+        // 5. FORMULARIO Y LÓGICA
         const form = document.getElementById('inscripcionForm');
         const nombre = document.getElementById('nombre');
-        const email = document.getElementById('email');
-        const telefono = document.getElementById('telefono');
-        const plan = document.getElementById('plan');
-        const submitBtn = document.getElementById('submitBtn');
-        const spinner = document.getElementById('spinner');
-        const btnText = document.getElementById('btnText');
-        const successMsg = document.getElementById('successMsg');
-        const progressFill = document.getElementById('progressFill');
-
-        function updateProgress() {
-            let filled = 0;
-            if (nombre.value.trim() !== '') filled++;
-            if (email.value.trim() !== '') filled++;
-            if (telefono.value.trim() !== '') filled++;
-            if (plan.value !== '') filled++;
-            progressFill.style.width = (filled / 4 * 100) + '%';
-        }
-
-        [nombre, email, telefono, plan].forEach(el => {
-            el.addEventListener('input', updateProgress);
-            el.addEventListener('change', updateProgress);
-        });
-
-        function validateField(input, errorId, condition) {
-            const errorEl = document.getElementById(errorId);
-            if (condition) {
-                input.classList.remove('error');
-                errorEl.classList.remove('show');
-                return true;
-            } else {
-                input.classList.add('error');
-                errorEl.classList.add('show');
-                return false;
-            }
-        }
-
-        nombre.addEventListener('blur', () => validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3));
-        email.addEventListener('blur', () => {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            validateField(email, 'error-email', re.test(email.value));
-        });
-        telefono.addEventListener('blur', () => validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, ''))));
-        plan.addEventListener('change', () => validateField(plan, 'error-plan', plan.value !== ''));
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const isNombreValid = validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
-            const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const isEmailValid = validateField(email, 'error-email', reEmail.test(email.value));
-            const isTelefonoValid = validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
-            const isPlanValid = validateField(plan, 'error-plan', plan.value !== '');
-
-            if (!isNombreValid || !isEmailValid || !isTelefonoValid || !isPlanValid) return;
-
-            submitBtn.disabled = true;
-            spinner.style.display = 'inline-block';
-            btnText.textContent = 'Guardando...';
-            successMsg.classList.remove('show');
-
-            try {
-                const response = await fetch('/api/inscribir', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        nombre: nombre.value,
-                        email: email.value,
-                        telefono: telefono.value,
-                        plan: plan.value
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    spinner.style.display = 'none';
-                    btnText.textContent = 'Enviar Inscripción';
-                    submitBtn.disabled = false;
-                    successMsg.textContent = '✅ ' + data.mensaje;
-                    successMsg.style.backgroundColor = 'var(--success)';
-                    successMsg.classList.add('show');
-                    form.reset();
-                    progressFill.style.width = '0%';
-                    setTimeout(() => successMsg.classList.remove('show'), 5000);
-                } else {
-                    throw new Error(data.error || 'Error en el servidor');
-                }
-            } catch (error) {
-                spinner.style.display = 'none';
-                btnText.textContent = 'Enviar Inscripción';
-                submitBtn.disabled = false;
-                successMsg.textContent = '❌ ' + error.message;
-                successMsg.style.backgroundColor = 'var(--error)';
-                successMsg.classList.add('show');
-            }
-        });
-    </script>
-</
+       
