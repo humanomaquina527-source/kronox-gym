@@ -9,9 +9,9 @@
            PALETA DE COLORES GIMNASIO (Rojo Profundo y Acero)
            ============================================ */
         :root {
-            --primary: #8B0000; /* Rojo Carmesí oscuro (no cansa la vista) */
+            --primary: #8B0000; /* Rojo Carmesí oscuro */
             --primary-dark: #5c0000;
-            --accent: #B22222; /* Rojo fuego para detalles */
+            --accent: #B22222; 
             --bg: #f4f4f4;
             --text: #222222;
             --card-bg: #ffffff;
@@ -19,11 +19,11 @@
             --success: #2e7d32;
             --error: #c62828;
             --shadow: 0 4px 10px rgba(0,0,0,0.1);
-            --radius: 8px; /* Bordes un poco más rectos, estilo gimnasio */
+            --radius: 8px; 
             --font-base: 16px;
         }
 
-        /* Modo oscuro (Acero y Negro) */
+        /* Modo oscuro */
         [data-theme="dark"] {
             --bg: #121212;
             --text: #e0e0e0;
@@ -37,18 +37,22 @@
         html[data-filter="deuteranopia"] { filter: url('#deuteranopia'); }
         html[data-filter="tritanopia"] { filter: url('#tritanopia'); }
 
-        /* Modo Alto Contraste */
+        /* Modo Alto Contraste (Arreglado) */
         html[data-contrast="high"] {
             --bg: #000000;
             --text: #ffffff;
-            --card-bg: #000000;
-            --border: #ffff00;
-            --primary: #ffff00;
-            --primary-dark: #ffff00;
-            --accent: #ffff00;
+            --card-bg: #111111;
+            --border: #ffffff;
+            --primary: #ffcc00; /* Amarillo mostaza */
+            --primary-dark: #ffcc00;
+            --accent: #ffcc00;
+            --success: #00ff00; 
+            --error: #ff3333; 
         }
         html[data-contrast="high"] .btn, 
         html[data-contrast="high"] .btn-submit { color: #000 !important; }
+        html[data-contrast="high"] .card { border: 2px solid #ffffff; }
+        html[data-contrast="high"] .hero { background: #000000; } 
 
         * {
             margin: 0;
@@ -113,7 +117,7 @@
         }
 
         /* ============================================
-           BOTONES DE UTILIDAD (Tema y Accesibilidad)
+           BOTONES DE UTILIDAD
            ============================================ */
         .nav-buttons {
             display: flex;
@@ -630,14 +634,12 @@
             accPanel.classList.toggle('active');
         });
 
-        // Cerrar panel si se hace clic fuera
         document.addEventListener('click', (e) => {
             if (!accPanel.contains(e.target) && e.target !== accToggle && !accToggle.contains(e.target)) {
                 accPanel.classList.remove('active');
             }
         });
 
-        // Cambiar tamaño de fuente
         let currentFontSize = 16;
         function changeFontSize(action) {
             if (action === 'reset') currentFontSize = 16;
@@ -646,24 +648,26 @@
             
             document.documentElement.style.setProperty('--font-base', currentFontSize + 'px');
             
-            // Actualizar botones activos
             document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn').forEach(btn => btn.classList.remove('active'));
             if (action === 'reset') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[1].classList.add('active');
             if (action === '+2px') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[2].classList.add('active');
             if (action === '-2px') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[0].classList.add('active');
         }
 
-        // Cambiar filtro de daltonismo
         function setFilter(type, btn) {
             if (type === 'none') html.removeAttribute('data-filter');
             else html.setAttribute('data-filter', type);
             
-            // Actualizar botones activos
             document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+
+            // Si se activa un filtro, apagar el alto contraste para que no choquen
+            if (type !== 'none' && html.getAttribute('data-contrast') === 'high') {
+                toggleContrast(document.getElementById('contrastBtn'));
+            }
         }
 
-        // Alternar Alto Contraste
+        // LÓGICA DEL ALTO CONTRASTE CORREGIDA
         function toggleContrast(btn) {
             if (html.getAttribute('data-contrast') === 'high') {
                 html.removeAttribute('data-contrast');
@@ -673,11 +677,16 @@
                 html.setAttribute('data-contrast', 'high');
                 btn.classList.add('active');
                 btn.textContent = 'Desactivar Alto Contraste';
+                
+                // APAGAR FILTROS DE DALTONISMO AL ACTIVAR CONTRASTE
+                html.removeAttribute('data-filter');
+                document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn')[0].classList.add('active');
             }
         }
 
         // ============================================
-        // 3. LÓGICA DEL FORMULARIO (Python Connection)
+        // 3. LÓGICA DEL FORMULARIO
         // ============================================
         const form = document.getElementById('inscripcionForm');
         const nombre = document.getElementById('nombre');
