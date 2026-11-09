@@ -6,35 +6,60 @@
     <title>Kronox Gym - Transforma tu Cuerpo</title>
     <style>
         /* ============================================
-           PRINCIPIO IHC: CONSISTENCIA (Variables globales)
+           PALETA DE COLORES GIMNASIO (Rojo Profundo y Acero)
            ============================================ */
         :root {
-            --primary: #ff6b00;
-            --primary-dark: #cc5500;
-            --bg: #ffffff;
-            --text: #1a1a1a;
-            --card-bg: #f9f9f9;
-            --border: #e0e0e0;
-            --success: #28a745;
-            --error: #dc3545;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --radius: 12px;
+            --primary: #8B0000; /* Rojo Carmesí oscuro (no cansa la vista) */
+            --primary-dark: #5c0000;
+            --accent: #B22222; /* Rojo fuego para detalles */
+            --bg: #f4f4f4;
+            --text: #222222;
+            --card-bg: #ffffff;
+            --border: #d1d1d1;
+            --success: #2e7d32;
+            --error: #c62828;
+            --shadow: 0 4px 10px rgba(0,0,0,0.1);
+            --radius: 8px; /* Bordes un poco más rectos, estilo gimnasio */
+            --font-base: 16px;
         }
 
-        /* Modo oscuro (Naturalidad - preferencia del usuario) */
+        /* Modo oscuro (Acero y Negro) */
         [data-theme="dark"] {
-            --bg: #1a1a1a;
-            --text: #f0f0f0;
-            --card-bg: #2a2a2a;
-            --border: #444;
-            --shadow: 0 4px 6px rgba(0,0,0,0.5);
+            --bg: #121212;
+            --text: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --border: #333333;
+            --shadow: 0 4px 10px rgba(0,0,0,0.6);
         }
+
+        /* Filtros de Daltonismo */
+        html[data-filter="protanopia"] { filter: url('#protanopia'); }
+        html[data-filter="deuteranopia"] { filter: url('#deuteranopia'); }
+        html[data-filter="tritanopia"] { filter: url('#tritanopia'); }
+
+        /* Modo Alto Contraste */
+        html[data-contrast="high"] {
+            --bg: #000000;
+            --text: #ffffff;
+            --card-bg: #000000;
+            --border: #ffff00;
+            --primary: #ffff00;
+            --primary-dark: #ffff00;
+            --accent: #ffff00;
+        }
+        html[data-contrast="high"] .btn, 
+        html[data-contrast="high"] .btn-submit { color: #000 !important; }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            font-size: var(--font-base);
+            transition: font-size 0.2s, filter 0.3s;
         }
 
         body {
@@ -45,7 +70,7 @@
         }
 
         /* ============================================
-           NAVEGACIÓN (Chunking - Máximo 5 opciones)
+           NAVEGACIÓN
            ============================================ */
         nav {
             display: flex;
@@ -57,12 +82,15 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 3px solid var(--primary);
         }
 
         .logo {
-            font-weight: bold;
+            font-weight: 900;
             font-size: 1.5rem;
             color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .nav-links {
@@ -74,28 +102,102 @@
         .nav-links a {
             text-decoration: none;
             color: var(--text);
-            font-weight: 500;
+            font-weight: 600;
             transition: color 0.2s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
         .nav-links a:hover {
             color: var(--primary);
         }
 
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
+        /* ============================================
+           BOTONES DE UTILIDAD (Tema y Accesibilidad)
+           ============================================ */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
         }
 
-        .theme-toggle:hover {
+        .icon-btn {
+            background: none;
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Panel de Accesibilidad Flotante */
+        .accessibility-panel {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            z-index: 200;
+            width: 300px;
+        }
+
+        .accessibility-panel.active {
+            display: block;
+        }
+
+        .accessibility-panel h3 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+        }
+
+        .acc-group {
+            margin-bottom: 1rem;
+        }
+
+        .acc-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .acc-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .acc-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .acc-btn:hover, .acc-btn.active {
             background: var(--primary);
             color: white;
+            border-color: var(--primary);
         }
 
         /* ============================================
@@ -103,45 +205,51 @@
            ============================================ */
         .hero {
             text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 5rem 2rem;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover;
             color: white;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .hero p {
             font-size: 1.2rem;
             max-width: 600px;
             margin: 0 auto 2rem;
+            font-weight: 500;
         }
 
         .btn {
             display: inline-block;
             padding: 0.8rem 2rem;
-            background: white;
-            color: var(--primary);
+            background: var(--primary);
+            color: white;
             text-decoration: none;
             border-radius: var(--radius);
             font-weight: bold;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, background 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            background: var(--primary-dark);
         }
 
         /* ============================================
-           SECCIÓN DE PLANES (Reconocimiento sobre recuerdo)
+           SECCIÓN DE PLANES
            ============================================ */
         .section {
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -149,14 +257,16 @@
         .section-title {
             text-align: center;
             font-size: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .card {
@@ -167,6 +277,7 @@
             text-align: center;
             box-shadow: var(--shadow);
             transition: transform 0.2s;
+            border-top: 4px solid var(--primary);
         }
 
         .card:hover {
@@ -176,32 +287,34 @@
         .card h3 {
             color: var(--primary);
             margin-bottom: 1rem;
+            text-transform: uppercase;
         }
 
         .price {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.5rem;
+            font-weight: 900;
             margin: 1rem 0;
         }
 
         .card ul {
             list-style: none;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
             text-align: left;
         }
 
         .card ul li {
-            padding: 0.3rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
         }
 
         .card ul li::before {
             content: "✓ ";
-            color: var(--success);
+            color: var(--primary);
             font-weight: bold;
         }
 
         /* ============================================
-           FORMULARIO (Prevención de errores + Feedback)
+           FORMULARIO
            ============================================ */
         .form-container {
             max-width: 600px;
@@ -210,6 +323,7 @@
             padding: 2rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary);
         }
 
         .form-group {
@@ -219,7 +333,8 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .form-group input,
@@ -240,27 +355,21 @@
             border-color: var(--primary);
         }
 
-        .form-group input.error {
-            border-color: var(--error);
-        }
-
         .error-msg {
             color: var(--error);
             font-size: 0.85rem;
             margin-top: 0.3rem;
             display: none;
+            font-weight: bold;
         }
 
-        .error-msg.show {
-            display: block;
-        }
+        .error-msg.show { display: block; }
+        .form-group input.error { border-color: var(--error); }
 
-        /* Barra de progreso (Recordar al usuario) */
         .progress-bar {
             width: 100%;
-            height: 8px;
+            height: 6px;
             background: var(--border);
-            border-radius: 4px;
             margin-bottom: 1.5rem;
             overflow: hidden;
         }
@@ -272,7 +381,6 @@
             transition: width 0.3s;
         }
 
-        /* Spinner de carga (Feedback) */
         .spinner {
             display: none;
             width: 20px;
@@ -282,12 +390,9 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-right: 0.5rem;
-            vertical-align: middle;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .btn-submit {
             width: 100%;
@@ -303,18 +408,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-submit:hover {
-            background: var(--primary-dark);
-        }
+        .btn-submit:hover { background: var(--primary-dark); }
+        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
-        .btn-submit:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        /* Mensaje de éxito */
         .success-msg {
             display: none;
             background: var(--success);
@@ -323,63 +423,86 @@
             border-radius: var(--radius);
             margin-top: 1rem;
             text-align: center;
+            font-weight: bold;
         }
 
-        .success-msg.show {
-            display: block;
-        }
+        .success-msg.show { display: block; }
 
-        /* ============================================
-           FOOTER
-           ============================================ */
         footer {
             text-align: center;
             padding: 2rem;
             background: var(--card-bg);
-            border-top: 1px solid var(--border);
+            border-top: 3px solid var(--primary);
             margin-top: 3rem;
         }
 
-        /* ============================================
-           RESPONSIVE (Móvil)
-           ============================================ */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
-            }
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            .section {
-                padding: 2rem 1rem;
-            }
+            nav { flex-direction: column; gap: 1rem; padding: 1rem; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+            .hero h1 { font-size: 2rem; }
+            .accessibility-panel { width: 90%; right: 5%; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Filtros SVG para Daltonismo (Ocultos) -->
+    <svg style="display: none;">
+        <filter id="protanopia"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter>
+        <filter id="deuteranopia"><feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/></filter>
+        <filter id="tritanopia"><feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/></filter>
+    </svg>
+
     <!-- NAVEGACIÓN -->
     <nav>
-        <div class="logo">KRONOX GYM</div>
+        <div class="logo">Kronox Gym</div>
         <ul class="nav-links">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#planes">Planes</a></li>
             <li><a href="#inscripcion">Inscripción</a></li>
             <li><a href="#contacto">Contacto</a></li>
         </ul>
-        <button class="theme-toggle" id="themeToggle">🌙 Modo Oscuro</button>
+        <div class="nav-buttons">
+            <button class="icon-btn" id="themeToggle" title="Cambiar Tema">🌙</button>
+            <button class="icon-btn" id="accToggle" title="Opciones de Accesibilidad">♿</button>
+        </div>
     </nav>
+
+    <!-- PANEL DE ACCESIBILIDAD -->
+    <div class="accessibility-panel" id="accPanel">
+        <h3>Accesibilidad Visual</h3>
+        
+        <div class="acc-group">
+            <label>Tamaño de letra</label>
+            <div class="acc-options">
+                <button class="acc-btn" onclick="changeFontSize('-2px')">A-</button>
+                <button class="acc-btn active" onclick="changeFontSize('reset')">A</button>
+                <button class="acc-btn" onclick="changeFontSize('+2px')">A+</button>
+            </div>
+        </div>
+
+        <div class="acc-group">
+            <label>Filtro de Daltonismo</label>
+            <div class="acc-options">
+                <button class="acc-btn active" onclick="setFilter('none', this)">Ninguno</button>
+                <button class="acc-btn" onclick="setFilter('protanopia', this)">Protanopía</button>
+                <button class="acc-btn" onclick="setFilter('deuteranopia', this)">Deuteranopía</button>
+                <button class="acc-btn" onclick="setFilter('tritanopia', this)">Tritanopía</button>
+            </div>
+        </div>
+
+        <div class="acc-group">
+            <label>Contraste</label>
+            <div class="acc-options">
+                <button class="acc-btn" id="contrastBtn" onclick="toggleContrast(this)">Activar Alto Contraste</button>
+            </div>
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero" id="inicio">
-        <h1>TRANSFORMA TU CUERPO</h1>
+        <h1>Transforma tu Cuerpo</h1>
         <p>Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento.</p>
         <a href="#inscripcion" class="btn">¡Inscríbete Ahora!</a>
     </section>
@@ -390,40 +513,40 @@
         <div class="cards">
             <div class="card">
                 <h3>Básico</h3>
-                <div class="price">$299<span style="font-size:1rem;">/mes</span></div>
+                <div class="price">$299<span style="font-size:1rem;font-weight:normal;">/mes</span></div>
                 <ul>
                     <li>Acceso a sala de pesas</li>
                     <li>Horario matutino</li>
                     <li>Casillero</li>
                 </ul>
-                <a href="#inscripcion" class="btn" style="background:var(--primary);color:white;">Elegir</a>
+                <a href="#inscripcion" class="btn">Elegir</a>
             </div>
-            <div class="card" style="border: 2px solid var(--primary);">
+            <div class="card" style="border-top: 4px solid var(--accent);">
                 <h3>Premium</h3>
-                <div class="price">$499<span style="font-size:1rem;">/mes</span></div>
+                <div class="price">$499<span style="font-size:1rem;font-weight:normal;">/mes</span></div>
                 <ul>
                     <li>Acceso total 24/7</li>
                     <li>Zona cardiovascular</li>
                     <li>Clases grupales</li>
                     <li>Entrenador personal</li>
                 </ul>
-                <a href="#inscripcion" class="btn" style="background:var(--primary);color:white;">Elegir</a>
+                <a href="#inscripcion" class="btn" style="background: var(--accent);">Elegir</a>
             </div>
             <div class="card">
                 <h3>Élite</h3>
-                <div class="price">$799<span style="font-size:1rem;">/mes</span></div>
+                <div class="price">$799<span style="font-size:1rem;font-weight:normal;">/mes</span></div>
                 <ul>
                     <li>Todo lo de Premium</li>
                     <li>Área VIP</li>
                     <li>Nutriólogo</li>
                     <li>Acceso a spa</li>
                 </ul>
-                <a href="#inscripcion" class="btn" style="background:var(--primary);color:white;">Elegir</a>
+                <a href="#inscripcion" class="btn">Elegir</a>
             </div>
         </div>
     </section>
 
-    <!-- FORMULARIO DE INSCRIPCIÓN -->
+    <!-- FORMULARIO -->
     <section class="section" id="inscripcion">
         <h2 class="section-title">Inscripción</h2>
         <div class="form-container">
@@ -467,41 +590,94 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer id="contacto">
         <p><strong>Kronox Gym</strong> - Transforma tu Cuerpo</p>
         <p>📍 Av. Universidad 123, Morelos | 📞 777-123-4567</p>
-        <p style="margin-top:1rem; font-size:0.9rem; color:var(--text); opacity:0.7;">
-            © 2026 Kronox Gym. Proyecto IHC - UAEM.
-        </p>
+        <p style="margin-top:1rem; font-size:0.9rem; opacity:0.7;">© 2026 Kronox Gym. Proyecto IHC - UAEM.</p>
     </footer>
 
     <script>
         // ============================================
-        // MODO OSCURO (Naturalidad)
+        // 1. LÓGICA DEL MODO OSCURO/CLARO
         // ============================================
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
 
         if (localStorage.getItem('theme') === 'dark') {
             html.setAttribute('data-theme', 'dark');
-            themeToggle.textContent = '☀️ Modo Claro';
+            themeToggle.textContent = '☀️';
         }
 
         themeToggle.addEventListener('click', () => {
             if (html.getAttribute('data-theme') === 'dark') {
                 html.removeAttribute('data-theme');
-                themeToggle.textContent = '🌙 Modo Oscuro';
+                themeToggle.textContent = '🌙';
                 localStorage.setItem('theme', 'light');
             } else {
                 html.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️ Modo Claro';
+                themeToggle.textContent = '☀️';
                 localStorage.setItem('theme', 'dark');
             }
         });
 
         // ============================================
-        // FORMULARIO: Validación + Feedback + Progreso
+        // 2. LÓGICA DEL PANEL DE ACCESIBILIDAD
+        // ============================================
+        const accToggle = document.getElementById('accToggle');
+        const accPanel = document.getElementById('accPanel');
+
+        accToggle.addEventListener('click', () => {
+            accPanel.classList.toggle('active');
+        });
+
+        // Cerrar panel si se hace clic fuera
+        document.addEventListener('click', (e) => {
+            if (!accPanel.contains(e.target) && e.target !== accToggle && !accToggle.contains(e.target)) {
+                accPanel.classList.remove('active');
+            }
+        });
+
+        // Cambiar tamaño de fuente
+        let currentFontSize = 16;
+        function changeFontSize(action) {
+            if (action === 'reset') currentFontSize = 16;
+            else if (action === '+2px') currentFontSize += 2;
+            else if (action === '-2px' && currentFontSize > 10) currentFontSize -= 2;
+            
+            document.documentElement.style.setProperty('--font-base', currentFontSize + 'px');
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn').forEach(btn => btn.classList.remove('active'));
+            if (action === 'reset') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[1].classList.add('active');
+            if (action === '+2px') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[2].classList.add('active');
+            if (action === '-2px') document.querySelectorAll('.acc-group')[0].querySelectorAll('.acc-btn')[0].classList.add('active');
+        }
+
+        // Cambiar filtro de daltonismo
+        function setFilter(type, btn) {
+            if (type === 'none') html.removeAttribute('data-filter');
+            else html.setAttribute('data-filter', type);
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        // Alternar Alto Contraste
+        function toggleContrast(btn) {
+            if (html.getAttribute('data-contrast') === 'high') {
+                html.removeAttribute('data-contrast');
+                btn.classList.remove('active');
+                btn.textContent = 'Activar Alto Contraste';
+            } else {
+                html.setAttribute('data-contrast', 'high');
+                btn.classList.add('active');
+                btn.textContent = 'Desactivar Alto Contraste';
+            }
+        }
+
+        // ============================================
+        // 3. LÓGICA DEL FORMULARIO (Python Connection)
         // ============================================
         const form = document.getElementById('inscripcionForm');
         const nombre = document.getElementById('nombre');
@@ -514,7 +690,6 @@
         const successMsg = document.getElementById('successMsg');
         const progressFill = document.getElementById('progressFill');
 
-        // Actualizar barra de progreso
         function updateProgress() {
             let filled = 0;
             if (nombre.value.trim() !== '') filled++;
@@ -529,7 +704,6 @@
             el.addEventListener('change', updateProgress);
         });
 
-        // Validación en tiempo real
         function validateField(input, errorId, condition) {
             const errorEl = document.getElementById(errorId);
             if (condition) {
@@ -543,53 +717,34 @@
             }
         }
 
-        nombre.addEventListener('blur', () => {
-            validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
-        });
-
+        nombre.addEventListener('blur', () => validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3));
         email.addEventListener('blur', () => {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             validateField(email, 'error-email', re.test(email.value));
         });
+        telefono.addEventListener('blur', () => validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, ''))));
+        plan.addEventListener('change', () => validateField(plan, 'error-plan', plan.value !== ''));
 
-        telefono.addEventListener('blur', () => {
-            validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
-        });
-
-        plan.addEventListener('change', () => {
-            validateField(plan, 'error-plan', plan.value !== '');
-        });
-
-        // ============================================
-        // ENVÍO REAL A PYTHON (AQUÍ ESTÁ LA CONEXIÓN)
-        // ============================================
         form.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evita que la página se recargue
+            e.preventDefault();
 
-            // 1. Validar todo antes de enviar
             const isNombreValid = validateField(nombre, 'error-nombre', nombre.value.trim().length >= 3);
             const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isEmailValid = validateField(email, 'error-email', reEmail.test(email.value));
             const isTelefonoValid = validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, '')));
             const isPlanValid = validateField(plan, 'error-plan', plan.value !== '');
 
-            if (!isNombreValid || !isEmailValid || !isTelefonoValid || !isPlanValid) {
-                return; // No enviar si hay errores
-            }
+            if (!isNombreValid || !isEmailValid || !isTelefonoValid || !isPlanValid) return;
 
-            // 2. Mostrar spinner (Feedback visual)
             submitBtn.disabled = true;
             spinner.style.display = 'inline-block';
-            btnText.textContent = 'Guardando en la nube...';
+            btnText.textContent = 'Guardando...';
             successMsg.classList.remove('show');
 
-            // 3. Enviar datos a Python (Flask)
             try {
                 const response = await fetch('/api/inscribir', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         nombre: nombre.value,
                         email: email.value,
@@ -601,7 +756,6 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Éxito: El servidor guardó los datos
                     spinner.style.display = 'none';
                     btnText.textContent = 'Enviar Inscripción';
                     submitBtn.disabled = false;
@@ -610,13 +764,11 @@
                     successMsg.classList.add('show');
                     form.reset();
                     progressFill.style.width = '0%';
-                    
                     setTimeout(() => successMsg.classList.remove('show'), 5000);
                 } else {
-                    throw new Error(data.error || 'Error desconocido en el servidor');
+                    throw new Error(data.error || 'Error en el servidor');
                 }
             } catch (error) {
-                // Error de red o del servidor
                 spinner.style.display = 'none';
                 btnText.textContent = 'Enviar Inscripción';
                 submitBtn.disabled = false;
