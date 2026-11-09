@@ -107,7 +107,7 @@
 
         .nav-links a:hover { color: var(--primary); }
 
-        /* CONTROLES FLOTANTES (ADAPTABLES) */
+        /* CONTROLES FLOTANTES */
         .floating-controls {
             position: fixed;
             top: 90px; 
@@ -134,6 +134,7 @@
             width: 45px;
             height: 45px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            font-weight: bold;
         }
 
         .icon-btn:hover {
@@ -386,14 +387,16 @@
     <nav>
         <div class="logo">Kronox Gym</div>
         <ul class="nav-links">
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#planes">Planes</a></li>
-            <li><a href="#inscripcion">Inscripción</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#inicio" data-translate="nav-inicio">Inicio</a></li>
+            <li><a href="#planes" data-translate="nav-planes">Planes</a></li>
+            <li><a href="#inscripcion" data-translate="nav-inscripcion">Inscripción</a></li>
+            <li><a href="#contacto" data-translate="nav-contacto">Contacto</a></li>
         </ul>
     </nav>
 
     <div class="floating-controls">
+        <!-- NUEVO BOTÓN DE IDIOMA -->
+        <button class="icon-btn" id="langToggle" title="Cambiar Idioma / Change Language" style="font-size: 0.9rem;">ES</button>
         <button class="icon-btn" id="ttsToggle" title="Lectura en Voz Alta">🔊</button>
         <button class="icon-btn" id="themeToggle" title="Cambiar Tema">🌙</button>
         <button class="icon-btn" id="accToggle" title="Opciones de Accesibilidad">
@@ -408,10 +411,10 @@
     </div>
 
     <div class="accessibility-panel" id="accPanel">
-        <h3>Accesibilidad Universal</h3>
+        <h3 data-translate="acc-titulo">Accesibilidad Universal</h3>
         
         <div class="acc-group">
-            <label>Tamaño de letra</label>
+            <label data-translate="acc-tamano">Tamaño de letra</label>
             <div class="acc-options">
                 <button class="acc-btn" onclick="changeFontSize('-2px')">A-</button>
                 <button class="acc-btn active" onclick="changeFontSize('reset')">A</button>
@@ -420,9 +423,9 @@
         </div>
 
         <div class="acc-group">
-            <label>Visión de Color</label>
+            <label data-translate="acc-vision">Visión de Color</label>
             <div class="acc-options">
-                <button class="acc-btn active" onclick="setFilter('none', this)">Ninguno</button>
+                <button class="acc-btn active" onclick="setFilter('none', this)" data-translate="acc-ninguno">Ninguno</button>
                 <button class="acc-btn" onclick="setFilter('protanopia', this)">Protanopía</button>
                 <button class="acc-btn" onclick="setFilter('deuteranopia', this)">Deuteranopía</button>
                 <button class="acc-btn" onclick="setFilter('tritanopia', this)">Tritanopía</button>
@@ -430,16 +433,16 @@
         </div>
 
         <div class="acc-group">
-            <label>Contraste</label>
+            <label data-translate="acc-contraste">Contraste</label>
             <div class="acc-options">
-                <button class="acc-btn" id="contrastBtn" onclick="toggleContrast(this)">Activar Alto Contraste</button>
+                <button class="acc-btn" id="contrastBtn" onclick="toggleContrast(this)" data-translate="acc-alto-contraste">Activar Alto Contraste</button>
             </div>
         </div>
 
         <div class="acc-group">
-            <label>Lengua de Señas (LSM)</label>
+            <label data-translate="acc-lsm">Lengua de Señas (LSM)</label>
             <div class="acc-options">
-                <button class="acc-btn" onclick="openLSM()" style="background: var(--primary); color: white;">🤟 Ver Tutorial en LSM</button>
+                <button class="acc-btn" onclick="openLSM()" style="background: var(--primary); color: white;" data-translate="acc-ver-lsm">🤟 Ver Tutorial en LSM</button>
             </div>
         </div>
     </div>
@@ -447,8 +450,8 @@
     <div class="modal" id="lsmModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeLSM()">✕</button>
-            <h3 style="color: var(--primary); margin-bottom: 1rem;">Tutorial en Lengua de Señas</h3>
-            <p style="margin-bottom: 1rem;">Video demostrativo de LSM (Espacio reservado para el video oficial del gimnasio).</p>
+            <h3 style="color: var(--primary); margin-bottom: 1rem;" data-translate="lsm-titulo">Tutorial en Lengua de Señas</h3>
+            <p style="margin-bottom: 1rem;" data-translate="lsm-desc">Video demostrativo de LSM (Espacio reservado para el video oficial del gimnasio).</p>
             <div class="video-container">
                 <iframe id="lsmVideo" src="https://www.youtube.com/embed/M7lc1UVf-VE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -456,107 +459,167 @@
     </div>
 
     <section class="hero" id="inicio">
-        <h1>Transforma tu Cuerpo</h1>
-        <p>Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento.</p>
-        <a href="#inscripcion" class="btn">¡Inscríbete Ahora!</a>
+        <h1 data-translate="hero-titulo">Transforma tu Cuerpo</h1>
+        <p data-translate="hero-desc">Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento.</p>
+        <a href="#inscripcion" class="btn" data-translate="hero-btn">¡Inscríbete Ahora!</a>
     </section>
 
     <section class="section" id="planes">
-        <h2 class="section-title">Nuestros Planes</h2>
+        <h2 class="section-title" data-translate="planes-titulo">Nuestros Planes</h2>
         <div class="cards">
             <div class="card">
-                <h3>Básico</h3>
+                <h3 data-translate="plan-basico">Básico</h3>
                 <div class="price">$299<span style="font-size:1rem;font-weight:normal;">/mes</span></div>
                 <ul>
-                    <li>Acceso a sala de pesas</li>
-                    <li>Horario matutino</li>
-                    <li>Casillero</li>
+                    <li data-translate="plan-basico-1">Acceso a sala de pesas</li>
+                    <li data-translate="plan-basico-2">Horario matutino</li>
+                    <li data-translate="plan-basico-3">Casillero</li>
                 </ul>
-                <a href="#inscripcion" class="btn">Elegir</a>
+                <a href="#inscripcion" class="btn" data-translate="btn-elegir">Elegir</a>
             </div>
             <div class="card" style="border-top: 4px solid var(--accent);">
-                <h3>Premium</h3>
+                <h3 data-translate="plan-premium">Premium</h3>
                 <div class="price">$499<span style="font-size:1rem;font-weight:normal;">/mes</span></div>
                 <ul>
-                    <li>Acceso total 24/7</li>
-                    <li>Zona cardiovascular</li>
-                    <li>Clases grupales</li>
-                    <li>Entrenador personal</li>
+                    <li data-translate="plan-premium-1">Acceso total 24/7</li>
+                    <li data-translate="plan-premium-2">Zona cardiovascular</li>
+                    <li data-translate="plan-premium-3">Clases grupales</li>
+                    <li data-translate="plan-premium-4">Entrenador personal</li>
                 </ul>
-                <a href="#inscripcion" class="btn" style="background: var(--accent);">Elegir</a>
+                <a href="#inscripcion" class="btn" style="background: var(--accent);" data-translate="btn-elegir">Elegir</a>
             </div>
             <div class="card">
-                <h3>Élite</h3>
+                <h3 data-translate="plan-elite">Élite</h3>
                 <div class="price">$799<span style="font-size:1rem;font-weight:normal;">/mes</span></div>
                 <ul>
-                    <li>Todo lo de Premium</li>
-                    <li>Área VIP</li>
-                    <li>Nutriólogo</li>
-                    <li>Acceso a spa</li>
+                    <li data-translate="plan-elite-1">Todo lo de Premium</li>
+                    <li data-translate="plan-elite-2">Área VIP</li>
+                    <li data-translate="plan-elite-3">Nutriólogo</li>
+                    <li data-translate="plan-elite-4">Acceso a spa</li>
                 </ul>
-                <a href="#inscripcion" class="btn">Elegir</a>
+                <a href="#inscripcion" class="btn" data-translate="btn-elegir">Elegir</a>
             </div>
         </div>
     </section>
 
     <section class="section" id="inscripcion">
-        <h2 class="section-title">Inscripción</h2>
+        <h2 class="section-title" data-translate="inscripcion-titulo">Inscripción</h2>
         <div class="form-container">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
             <form id="inscripcionForm">
                 <div class="form-group">
-                    <label for="nombre">Nombre completo *</label>
+                    <label for="nombre" data-translate="form-nombre">Nombre completo *</label>
                     <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
-                    <span class="error-msg" id="error-nombre">Por favor, ingresa tu nombre.</span>
+                    <span class="error-msg" id="error-nombre" data-translate="error-nombre">Por favor, ingresa tu nombre.</span>
                 </div>
                 <div class="form-group">
-                    <label for="email">Correo electrónico *</label>
+                    <label for="email" data-translate="form-email">Correo electrónico *</label>
                     <input type="email" id="email" placeholder="Ej: juan@email.com" required>
-                    <span class="error-msg" id="error-email">Ingresa un correo válido.</span>
+                    <span class="error-msg" id="error-email" data-translate="error-email">Ingresa un correo válido.</span>
                 </div>
                 <div class="form-group">
-                    <label for="telefono">Teléfono *</label>
+                    <label for="telefono" data-translate="form-telefono">Teléfono *</label>
                     <input type="tel" id="telefono" placeholder="Ej: 7771234567" required>
-                    <span class="error-msg" id="error-telefono">Ingresa un teléfono de 10 dígitos.</span>
+                    <span class="error-msg" id="error-telefono" data-translate="error-telefono">Ingresa un teléfono de 10 dígitos.</span>
                 </div>
                 <div class="form-group">
-                    <label for="plan">Selecciona tu plan *</label>
+                    <label for="plan" data-translate="form-plan">Selecciona tu plan *</label>
                     <select id="plan" required>
-                        <option value="">-- Elige un plan --</option>
-                        <option value="Básico">Básico - $299/mes</option>
-                        <option value="Premium">Premium - $499/mes</option>
-                        <option value="Élite">Élite - $799/mes</option>
+                        <option value="" data-translate="form-plan-option">-- Elige un plan --</option>
+                        <option value="Básico" data-translate="form-plan-basico">Básico - $299/mes</option>
+                        <option value="Premium" data-translate="form-plan-premium">Premium - $499/mes</option>
+                        <option value="Élite" data-translate="form-plan-elite">Élite - $799/mes</option>
                     </select>
-                    <span class="error-msg" id="error-plan">Selecciona un plan.</span>
+                    <span class="error-msg" id="error-plan" data-translate="error-plan">Selecciona un plan.</span>
                 </div>
                 
                 <div style="display: flex; gap: 10px; margin-top: 1rem;">
-                    <button type="button" class="btn" onclick="limpiarFormulario()" style="background: #555; flex: 1;">Cancelar</button>
+                    <button type="button" class="btn" onclick="limpiarFormulario()" style="background: #555; flex: 1;" data-translate="btn-cancelar">Cancelar</button>
                     <button type="submit" class="btn-submit" id="submitBtn" style="flex: 2;">
                         <span class="spinner" id="spinner"></span>
-                        <span id="btnText">Enviar Inscripción</span>
+                        <span id="btnText" data-translate="btn-enviar">Enviar Inscripción</span>
                     </button>
                 </div>
                 
                 <div class="success-msg" id="successMsg">
-                    ✅ ¡Inscripción exitosa! Te contactaremos pronto.
+                    <!-- PALOMITA SIMPLE AQUÍ -->
+                    <span style="font-size: 1.2rem; margin-right: 5px;">✔</span>
+                    <span id="successText" data-translate="msg-exito">¡Inscripción exitosa! Te contactaremos pronto.</span>
                 </div>
             </form>
         </div>
     </section>
 
     <footer id="contacto">
-        <p><strong>Kronox Gym</strong> - Transforma tu Cuerpo</p>
+        <p><strong>Kronox Gym</strong> - <span data-translate="footer-slogan">Transforma tu Cuerpo</span></p>
         <p>📍 Av. Universidad 123, Morelos | 📞 777-123-4567</p>
-        <p style="margin-top:1rem; font-size:0.9rem; opacity:0.7;">© 2026 Kronox Gym. Proyecto IHC - UAEM.</p>
+        <p style="margin-top:1rem; font-size:0.9rem; opacity:0.7;">© 2026 Kronox Gym. <span data-translate="footer-proyecto">Proyecto IHC - UAEM.</span></p>
     </footer>
 
     <script>
         const html = document.documentElement;
 
-        // 1. MODO OSCURO
+        // 1. DICCIONARIO DE TRADUCCIONES (IHC: Usabilidad Universal)
+        const translations = {
+            'es': {
+                'nav-inicio': 'Inicio', 'nav-planes': 'Planes', 'nav-inscripcion': 'Inscripción', 'nav-contacto': 'Contacto',
+                'hero-titulo': 'Transforma tu Cuerpo', 'hero-desc': 'Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento.', 'hero-btn': '¡Inscríbete Ahora!',
+                'planes-titulo': 'Nuestros Planes', 'plan-basico': 'Básico', 'plan-premium': 'Premium', 'plan-elite': 'Élite', 'btn-elegir': 'Elegir',
+                'plan-basico-1': 'Acceso a sala de pesas', 'plan-basico-2': 'Horario matutino', 'plan-basico-3': 'Casillero',
+                'plan-premium-1': 'Acceso total 24/7', 'plan-premium-2': 'Zona cardiovascular', 'plan-premium-3': 'Clases grupales', 'plan-premium-4': 'Entrenador personal',
+                'plan-elite-1': 'Todo lo de Premium', 'plan-elite-2': 'Área VIP', 'plan-elite-3': 'Nutriólogo', 'plan-elite-4': 'Acceso a spa',
+                'inscripcion-titulo': 'Inscripción', 'form-nombre': 'Nombre completo *', 'form-email': 'Correo electrónico *', 'form-telefono': 'Teléfono *', 'form-plan': 'Selecciona tu plan *',
+                'form-plan-option': '-- Elige un plan --', 'form-plan-basico': 'Básico - $299/mes', 'form-plan-premium': 'Premium - $499/mes', 'form-plan-elite': 'Élite - $799/mes',
+                'error-nombre': 'Por favor, ingresa tu nombre.', 'error-email': 'Ingresa un correo válido.', 'error-telefono': 'Ingresa un teléfono de 10 dígitos.', 'error-plan': 'Selecciona un plan.',
+                'btn-cancelar': 'Cancelar', 'btn-enviar': 'Enviar Inscripción', 'msg-exito': '¡Inscripción exitosa! Te contactaremos pronto.',
+                'acc-titulo': 'Accesibilidad Universal', 'acc-tamano': 'Tamaño de letra', 'acc-vision': 'Visión de Color', 'acc-ninguno': 'Ninguno',
+                'acc-contraste': 'Contraste', 'acc-alto-contraste': 'Activar Alto Contraste', 'acc-lsm': 'Lengua de Señas (LSM)', 'acc-ver-lsm': '🤟 Ver Tutorial en LSM',
+                'lsm-titulo': 'Tutorial en Lengua de Señas', 'lsm-desc': 'Video demostrativo de LSM (Espacio reservado para el video oficial del gimnasio).',
+                'footer-slogan': 'Transforma tu Cuerpo', 'footer-proyecto': 'Proyecto IHC - UAEM.'
+            },
+            'en': {
+                'nav-inicio': 'Home', 'nav-planes': 'Plans', 'nav-inscripcion': 'Registration', 'nav-contacto': 'Contact',
+                'hero-titulo': 'Transform Your Body', 'hero-desc': 'Train with discipline, energy, and an environment designed for your maximum performance.', 'hero-btn': 'Register Now!',
+                'planes-titulo': 'Our Plans', 'plan-basico': 'Basic', 'plan-premium': 'Premium', 'plan-elite': 'Elite', 'btn-elegir': 'Choose',
+                'plan-basico-1': 'Weight room access', 'plan-basico-2': 'Morning schedule', 'plan-basico-3': 'Locker',
+                'plan-premium-1': '24/7 full access', 'plan-premium-2': 'Cardio zone', 'plan-premium-3': 'Group classes', 'plan-premium-4': 'Personal trainer',
+                'plan-elite-1': 'Everything in Premium', 'plan-elite-2': 'VIP Area', 'plan-elite-3': 'Nutritionist', 'plan-elite-4': 'Spa access',
+                'inscripcion-titulo': 'Registration', 'form-nombre': 'Full Name *', 'form-email': 'Email *', 'form-telefono': 'Phone *', 'form-plan': 'Select your plan *',
+                'form-plan-option': '-- Choose a plan --', 'form-plan-basico': 'Basic - $299/mo', 'form-plan-premium': 'Premium - $499/mo', 'form-plan-elite': 'Elite - $799/mo',
+                'error-nombre': 'Please enter your name.', 'error-email': 'Enter a valid email.', 'error-telefono': 'Enter a 10-digit phone number.', 'error-plan': 'Select a plan.',
+                'btn-cancelar': 'Cancel', 'btn-enviar': 'Send Registration', 'msg-exito': 'Registration successful! We will contact you soon.',
+                'acc-titulo': 'Universal Accessibility', 'acc-tamano': 'Font Size', 'acc-vision': 'Color Vision', 'acc-ninguno': 'None',
+                'acc-contraste': 'Contrast', 'acc-alto-contraste': 'Enable High Contrast', 'acc-lsm': 'Sign Language (LSM)', 'acc-ver-lsm': '🤟 Watch LSM Tutorial',
+                'lsm-titulo': 'Sign Language Tutorial', 'lsm-desc': 'LSM demonstration video (Space reserved for the official gym video).',
+                'footer-slogan': 'Transform Your Body', 'footer-proyecto': 'HCI Project - UAEM.'
+            }
+        };
+
+        let currentLang = 'es';
+        const langToggle = document.getElementById('langToggle');
+
+        // Lógica para cambiar el idioma
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            langToggle.textContent = currentLang.toUpperCase();
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[currentLang][key]) {
+                    // Si es un input o un select option, cambiamos el placeholder o el texto
+                    if (el.tagName === 'INPUT') {
+                        el.placeholder = translations[currentLang][key];
+                    } else if (el.tagName === 'OPTION') {
+                        el.textContent = translations[currentLang][key];
+                    } else {
+                        el.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+        });
+
+        // 2. MODO OSCURO
         const themeToggle = document.getElementById('themeToggle');
         if (localStorage.getItem('theme') === 'dark') {
             html.setAttribute('data-theme', 'dark');
@@ -574,7 +637,7 @@
             }
         });
 
-        // 2. PANEL ACCESIBILIDAD
+        // 3. PANEL ACCESIBILIDAD
         const accToggle = document.getElementById('accToggle');
         const accPanel = document.getElementById('accPanel');
         accToggle.addEventListener('click', () => accPanel.classList.toggle('active'));
@@ -610,18 +673,19 @@
             if (html.getAttribute('data-contrast') === 'high') {
                 html.removeAttribute('data-contrast');
                 btn.classList.remove('active');
-                btn.textContent = 'Activar Alto Contraste';
+                btn.textContent = translations[currentLang]['acc-alto-contraste'];
             } else {
                 html.setAttribute('data-contrast', 'high');
                 btn.classList.add('active');
-                btn.textContent = 'Desactivar Alto Contraste';
+                // Si está en inglés o español, cambia el texto del botón
+                btn.textContent = currentLang === 'es' ? 'Desactivar Alto Contraste' : 'Disable High Contrast';
                 html.removeAttribute('data-filter');
                 document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.acc-group')[1].querySelectorAll('.acc-btn')[0].classList.add('active');
             }
         }
 
-        // 3. LECTURA EN VOZ ALTA (TTS)
+        // 4. LECTURA EN VOZ ALTA (TTS)
         let isSpeaking = false;
         const ttsToggle = document.getElementById('ttsToggle');
         ttsToggle.addEventListener('click', () => {
@@ -630,9 +694,11 @@
                 isSpeaking = false;
                 ttsToggle.textContent = '🔊';
             } else {
-                const text = "Bienvenido a Kronox Gym. Transforma tu cuerpo. Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento. Contamos con planes básico, premium y elite. Por favor, dirígete a la sección de inscripción para llenar el formulario.";
+                const text = currentLang === 'es' 
+                    ? "Bienvenido a Kronox Gym. Transforma tu cuerpo. Entrena con disciplina, energía y un entorno diseñado para tu máximo rendimiento."
+                    : "Welcome to Kronox Gym. Transform your body. Train with discipline, energy, and an environment designed for your maximum performance.";
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'es-MX';
+                utterance.lang = currentLang === 'es' ? 'es-MX' : 'en-US';
                 utterance.onend = () => {
                     isSpeaking = false;
                     ttsToggle.textContent = '🔊';
@@ -643,7 +709,7 @@
             }
         });
 
-        // 4. MODAL LSM
+        // 5. MODAL LSM
         const lsmModal = document.getElementById('lsmModal');
         const videoIframe = document.getElementById('lsmVideo');
         const originalVideoSrc = videoIframe.src;
@@ -667,7 +733,7 @@
             if (e.target === lsmModal) closeLSM();
         });
 
-        // 5. FORMULARIO Y LÓGICA
+        // 6. FORMULARIO Y LÓGICA
         const form = document.getElementById('inscripcionForm');
         const nombre = document.getElementById('nombre');
         const email = document.getElementById('email');
@@ -714,9 +780,9 @@
         telefono.addEventListener('blur', () => validateField(telefono, 'error-telefono', /^\d{10}$/.test(telefono.value.replace(/\s/g, ''))));
         plan.addEventListener('change', () => validateField(plan, 'error-plan', plan.value !== ''));
 
-        // NUEVA FUNCIÓN: Limpiar formulario (Salidas de emergencia)
         function limpiarFormulario() {
-            if(confirm("¿Estás seguro de que deseas cancelar la inscripción? Se borrarán los datos ingresados.")) {
+            const msg = currentLang === 'es' ? "¿Estás seguro de que deseas cancelar la inscripción? Se borrarán los datos ingresados." : "Are you sure you want to cancel the registration? The entered data will be deleted.";
+            if(confirm(msg)) {
                 form.reset();
                 progressFill.style.width = '0%';
                 document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
@@ -737,7 +803,7 @@
 
             submitBtn.disabled = true;
             spinner.style.display = 'inline-block';
-            btnText.textContent = 'Guardando...';
+            btnText.textContent = currentLang === 'es' ? 'Guardando...' : 'Saving...';
             successMsg.classList.remove('show');
 
             try {
@@ -756,22 +822,23 @@
 
                 if (response.ok) {
                     spinner.style.display = 'none';
-                    btnText.textContent = 'Enviar Inscripción';
+                    btnText.textContent = translations[currentLang]['btn-enviar'];
                     submitBtn.disabled = false;
-                    successMsg.textContent = '✅ ' + data.mensaje;
+                    // Mensaje de éxito (Python ya lo devuelve en español, pero aquí lo mostramos)
+                    document.getElementById('successText').textContent = data.mensaje;
                     successMsg.style.backgroundColor = 'var(--success)';
                     successMsg.classList.add('show');
                     form.reset();
                     progressFill.style.width = '0%';
                     setTimeout(() => successMsg.classList.remove('show'), 8000);
                 } else {
-                    throw new Error(data.error || 'Error en el servidor');
+                    throw new Error(data.error || 'Server error');
                 }
             } catch (error) {
                 spinner.style.display = 'none';
-                btnText.textContent = 'Enviar Inscripción';
+                btnText.textContent = translations[currentLang]['btn-enviar'];
                 submitBtn.disabled = false;
-                successMsg.textContent = '❌ ' + error.message;
+                document.getElementById('successText').textContent = '❌ ' + error.message;
                 successMsg.style.backgroundColor = 'var(--error)';
                 successMsg.classList.add('show');
             }
